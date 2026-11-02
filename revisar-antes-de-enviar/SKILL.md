@@ -24,6 +24,7 @@ Pega problemas antes de chegarem ao GitHub, olhando o conjunto do que vai ser en
 | **Fora do escopo** | Mudança que não combina com a mensagem do commit ou com a tarefa da sessão |
 | **Arquivo esquecido** | Arquivo sem commit que deveria ir junto; manifesto sem lockfile, ou lockfile sem manifesto; código novo sem o teste ou o README que a tarefa pedia |
 | **Segredo ou dado pessoal** | Chaves, tokens, senhas, arquivos `.env`, e-mails e caminhos pessoais (`C:\Users\...`, `/home/...`) |
+| **Autor do commit** | E-mail de autor e de quem commitou (`git log --format='%ae %ce'`): em repositório público, só o `noreply` |
 | **Sobra de teste ou depuração** | `console.log`, `debugger`, `dbg!`, `println!` de depuração, `.only`, `.skip`, código comentado, arquivos temporários |
 | **Dependência nova** | Pacote novo ou trocado em `package.json`, `Cargo.toml` ou nos lockfiles, inclusive os indiretos: dizer qual é e por que entrou |
 | **Co-autor** | Commit com `Co-Authored-By` ou outra atribuição ao Claude na mensagem |
