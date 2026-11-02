@@ -7,6 +7,7 @@ Skills pessoais para o [Claude Code](https://claude.com/claude-code), que valem 
 | [`guardar-licao`](guardar-licao/SKILL.md) | Transforma um erro, uma armadilha ou uma correção em uma lição de uma linha, no lugar certo, e só grava com aprovação. |
 | [`causa-raiz`](causa-raiz/SKILL.md) | Leva do sintoma à causa com os cinco porquês, procura outras ocorrências da mesma causa e escreve a regra geral. Só analisa. |
 | [`corrigir`](corrigir/SKILL.md) | Corrige um bug por vez: reproduzir, causa raiz, teste que falha, correção mínima, teste verde e lição. Inspirada na `github-resolution` do Akita. |
+| [`investigar-falha`](investigar-falha/SKILL.md) | Investiga uma falha sem causa conhecida, da evidência à causa provável, e entrega o conserto à `corrigir`. Não corrige. |
 | [`revisar-antes-de-enviar`](revisar-antes-de-enviar/SKILL.md) | Revisa os commits que ainda não foram enviados e termina com um veredito. Nunca faz o push. |
 | [`release`](release/SKILL.md) | Leva uma versão nova até o rascunho do release conferido. Nunca cria a tag nem publica sem aprovação. |
 
