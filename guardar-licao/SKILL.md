@@ -17,8 +17,9 @@ Não vale guardar o que o código, o histórico do git ou os documentos do proje
 
 ## Passos
 
-1. **Escrever a lição em uma linha:** o que acontece + o que fazer + a origem entre parênteses, curta: `(Tambor, 31/10/2026)`. Precisa servir para quem não viu esta sessão, então nada de "hoje" ou "aquele erro". Escrever a regra geral por trás do caso, não só o caso: a lição deve servir para situações parecidas, não apenas para a que aconteceu.
-2. **Decidir o destino.** A pergunta é: **"isso vale fora deste projeto?"**
+1. **Achar a causa raiz, com os cinco porquês:** antes de escrever, perguntar "por quê?" sobre o que aconteceu, e de novo sobre cada resposta, até chegar à causa raiz. A lição é sobre a causa, não sobre o sintoma.
+2. **Escrever a lição em uma linha:** o que acontece + o que fazer + a origem entre parênteses, curta: `(Tambor, 31/10/2026)`. Precisa servir para quem não viu esta sessão, então nada de "hoje" ou "aquele erro". Escrever a regra geral por trás do caso, não só o caso: a lição deve servir para situações parecidas, não apenas para a que aconteceu.
+3. **Decidir o destino.** A pergunta é: **"isso vale fora deste projeto?"**
 
    | Destino | Quando |
    | --- | --- |
@@ -30,17 +31,18 @@ Não vale guardar o que o código, o histórico do git ou os documentos do proje
 
    Se o `~/.claude/CLAUDE.md` não existir, criar o arquivo com a seção "Lições"; se só faltar a seção, acrescentá-la. Se o projeto não tiver o destino escolhido, perguntar ao usuário onde guardar, com uma sugestão.
 
-3. **Conferir o destino antes de escrever:** ler o que já está lá.
+4. **Conferir o destino antes de escrever:** ler o que já está lá.
    - Se a lição já existir, não repetir.
    - Se houver outra parecida ou obsoleta, propor juntar ou remover, e mostrar isso no diff.
-4. **Antes de propor, conferir a qualidade da lição.** Corrigir o texto até passar nos quatro pontos:
+5. **Antes de propor, conferir a qualidade da lição.** Corrigir o texto até passar nos cinco pontos:
    - **Uma ideia por lição:** se a frase tem "e" juntando duas regras, vira duas lições.
    - **Regra geral primeiro:** o detalhe da ferramenta ou do sistema vem depois, como o "como" ou o exemplo.
    - **Ação concreta:** dizer o que fazer. Evitar "lembrar que", "ter cuidado", "prestar atenção".
    - **Só o que foi comprovado:** não gravar como regra uma hipótese ou uma correção que ainda não se provou.
-5. **Mostrar o diff, com a proposta no formato abaixo.**
-6. **Só gravar com o OK do usuário** ("ok lição"). Sem OK, nada muda. Se ele pedir ajuste, mostrar de novo. Esta skill grava o arquivo, mas não faz commit, exceto no caso abaixo.
-7. **Se o destino for uma skill existente,** gravar também um commit no repositório `minhas-skills`, com a mensagem dizendo qual erro ou lição causou a mudança: o histórico explica por que cada regra existe. O push passa pela skill `revisar-antes-de-enviar`.
+   - **Teste de abstração:** a lição serviria em outro projeto, outra linguagem e outro tipo de ferramenta? Se só serve nesse tipo de ferramenta, subir um nível.
+6. **Mostrar o diff, com a proposta no formato abaixo.**
+7. **Só gravar com o OK do usuário** ("ok lição"). Sem OK, nada muda. Se ele pedir ajuste, mostrar de novo. Esta skill grava o arquivo, mas não faz commit, exceto no caso abaixo.
+8. **Se o destino for uma skill existente,** gravar também um commit no repositório `minhas-skills`, com a mensagem dizendo qual erro ou lição causou a mudança: o histórico explica por que cada regra existe. O push passa pela skill `revisar-antes-de-enviar`.
 
 ## Formato da proposta
 
@@ -48,9 +50,10 @@ Toda lição proposta aparece **no fim da mensagem**, sempre neste bloco, com um
 
 ---
 > 💡 **LIÇÃO PROPOSTA**  
-> **Lição:** <uma linha: o que acontece + o que fazer>  
+> **Regra geral:** <o que vai ser gravado, em uma linha: o que acontece + o que fazer>  
+> **Caso:** <o que aconteceu, em uma frase>  
 > **Onde:** Global | Projeto (Armadilhas/Regras) | Teste | Backlog | Skill <nome>  
-> **Por quê:** <uma frase sobre o que aconteceu>  
+> **Por quê:** <a causa raiz encontrada>  
 > Responda **"ok lição"** para gravar, ou diga o ajuste.
 ---
 
