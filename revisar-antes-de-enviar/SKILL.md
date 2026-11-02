@@ -26,6 +26,7 @@ Pega problemas antes de chegarem ao GitHub, olhando o conjunto do que vai ser en
 | **Segredo ou dado pessoal** | Chaves, tokens, senhas, arquivos `.env`, e-mails e caminhos pessoais (`C:\Users\...`, `/home/...`) |
 | **Autor do commit** | E-mail de autor e de quem commitou (`git log --format='%ae %ce'`): em repositório público, só o `noreply` |
 | **Sobra de teste ou depuração** | `console.log`, `debugger`, `dbg!`, `println!` de depuração, `.only`, `.skip`, código comentado, arquivos temporários |
+| **Changelog** | O envio muda algo para quem usa e não mexe na seção "Não lançado" do `CHANGELOG.md`: avisar. Mudança só interna não entra lá |
 | **Dependência nova** | Pacote novo ou trocado em `package.json`, `Cargo.toml` ou nos lockfiles, inclusive os indiretos: dizer qual é e por que entrou |
 | **Co-autor** | Commit com `Co-Authored-By` ou outra atribuição ao Claude na mensagem |
 | **Push direto na main** | Os commits estão na branch principal: avisar e sugerir branch + PR |
