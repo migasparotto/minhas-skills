@@ -19,6 +19,12 @@ Leva do sintoma à causa, e da causa a uma regra que serve além deste caso.
    - **Regra geral:** o que acontece + o que fazer, sobre a causa e não sobre o sintoma.
    - **Caso:** o que aconteceu, em uma frase.
 6. **Teste de abstração:** a regra serviria em outro projeto, outra linguagem e outro tipo de ferramenta? Se só serve nesse tipo de ferramenta, subir um nível. O detalhe da ferramenta fica como exemplo.
+7. **Kaizen, antes de encerrar:** responder sempre as 3 perguntas, mesmo que a resposta seja "nenhum":
+   1. **Onde mais?** O mesmo problema existe em outro ambiente (teste, e2e local, CI, app no PC, CD), script, skill ou projeto? O passo 4 olha o código; este olha todo lugar onde o código roda e todo processo parecido.
+   2. **Que mecanismo impede a repetição?** Teste, script, regra do GitHub ou permissão, não só um texto.
+   3. **Em que camada?** Projeto (`CLAUDE.md` dele), todos os projetos (`~/.claude/CLAUDE.md`) ou projetos futuros (cartilha).
+
+   Se alguma resposta não for "nenhum", entregar a quem chamou, para ele propor no formato 💡 KAIZEN PROPOSTO (da skill `guardar-licao`).
 
 ## Formato do resultado
 
@@ -30,3 +36,4 @@ Leva do sintoma à causa, e da causa a uma regra que serve além deste caso.
 **Irmãos:** <arquivo:linha e o motivo | nenhum, procurado em <onde>>
 **Regra geral:** <uma linha>
 **Caso:** <uma frase>
+**Kaizen:** onde mais: <lugares | nenhum, procurado em <onde>> · mecanismo: <qual | nenhum> · camada: <projeto | todos | futuros>
