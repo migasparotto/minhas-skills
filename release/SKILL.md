@@ -15,7 +15,7 @@ Leva o `main` até um release em rascunho conferido, pronto para o usuário publ
 
 ## Passos
 
-Os arquivos de versão e os comandos vêm do `CLAUDE.md` do projeto e dos workflows. Num app Tauri, são `package.json`, `src-tauri/tauri.conf.json` e `src-tauri/Cargo.toml`, além dos lockfiles. O nome e o tipo dos arquivos que o CD gera vêm do CD do projeto (no Tauri, o instalador `.exe`).
+Os arquivos de versão, o que o CD gera e o teste rápido depois de publicar vêm da seção Release do `CLAUDE.md` do projeto; se ela não existir, perguntar ao usuário e propor criá-la.
 
 1. **Conferir o ponto de partida:** branch principal atualizada, sem mudanças pendentes e com CI verde. Achar a última tag e listar o que mudou desde ela.
 2. **Decidir o número pelo que mudou para quem usa:**
@@ -43,11 +43,11 @@ Os arquivos de versão e os comandos vêm do `CLAUDE.md` do projeto e dos workfl
 11. **Conferir o rascunho**, comparando de verdade:
     - O release está como rascunho, com a tag e o nome certos.
     - O texto das notas é **idêntico** à seção do `CHANGELOG.md` (ignorando diferenças de quebra de linha).
-    - Os arquivos que o CD gera (no Tauri, o instalador `.exe`) estão anexados, com a versão certa no nome, e o upload terminou.
+    - Os arquivos que o CD gera estão anexados, com a versão certa no nome, e o upload terminou.
 12. **PARAR e avisar o usuário,** com o link do rascunho e o resultado de cada conferência. Quem publica é ele. Só publicar por ele se ele pedir, para esta versão.
 13. **Depois de publicado:**
     - Conferir que o release é o mais recente.
-    - Lembrar o usuário de fazer o teste rápido de quem usa: instalar a versão publicada e conferir que o app abre, que o ícone está certo e que a função principal do app funciona (no Tambor, uma nota salva).
+    - Lembrar o usuário de fazer o teste rápido de quem usa.
     - **Só depois do ok dele nesse teste,** marcar a versão como concluída no backlog e anotar o próximo passo.
     - Se algo tiver dado errado na release, rodar a skill `guardar-licao`.
 
