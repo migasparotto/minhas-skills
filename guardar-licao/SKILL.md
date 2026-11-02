@@ -39,7 +39,8 @@ Não vale guardar o que o código, o histórico do git ou os documentos do proje
    - **Ação concreta:** dizer o que fazer. Evitar "lembrar que", "ter cuidado", "prestar atenção".
    - **Só o que foi comprovado:** não gravar como regra uma hipótese ou uma correção que ainda não se provou.
 5. **Mostrar o diff, com a proposta no formato abaixo.**
-6. **Só gravar com o OK do usuário** ("ok lição"). Sem OK, nada muda. Se ele pedir ajuste, mostrar de novo. Esta skill grava o arquivo, mas não faz commit.
+6. **Só gravar com o OK do usuário** ("ok lição"). Sem OK, nada muda. Se ele pedir ajuste, mostrar de novo. Esta skill grava o arquivo, mas não faz commit, exceto no caso abaixo.
+7. **Se o destino for uma skill existente,** gravar também um commit no repositório `minhas-skills`, com a mensagem dizendo qual erro ou lição causou a mudança: o histórico explica por que cada regra existe. O push passa pela skill `revisar-antes-de-enviar`.
 
 ## Formato da proposta
 
