@@ -9,8 +9,9 @@ Corrige um bug de modo que ele não volte, e que a causa dele vire aprendizado.
 
 ## Regras que nunca mudam
 
-- **Um bug por vez.** Outro defeito achado no caminho é anotado e mostrado ao usuário, e não corrigido junto.
+- **Um bug por vez, a classe inteira.** Os irmãos com a mesma causa entram no mesmo PR, cada um com teste. Causa diferente é outro bug: é anotado e mostrado ao usuário, e não corrigido junto.
 - **Correção mínima, sem refatoração de passagem.** O diff contém só o que o bug exige.
+- **Sem sujeira (slop):** nada de código morto ou comentado, abstração especulativa, tratamento "por via das dúvidas", erro engolido, teste enfraquecido para passar ou `TODO` no lugar do trabalho.
 - **Nada de correção antes do teste que falha.**
 - **Push e merge continuam dependendo do OK do usuário.**
 
@@ -18,9 +19,9 @@ Corrige um bug de modo que ele não volte, e que a causa dele vire aprendizado.
 
 1. **Reproduzir:** pelos passos do relato, ou pelos dados de quem viu o bug. Guardar a saída inteira em arquivo antes de filtrar. Se não reproduzir, parar e mostrar o que foi tentado.
 2. **Causa raiz:** rodar a skill `causa-raiz` e mostrar o resultado, com os irmãos do bug. Se a causa for só hipótese, dizer isso antes de seguir. Se o conserto mudar um comportamento combinado ou uma decisão dos documentos, parar e levar para debate.
-3. **Teste de regressão:** escrever o teste na camada mais baixa que pega o bug, e rodar para **vê-lo falhar pelo motivo certo**. Mostrar a falha. Cobrir também o caso de borda (vazio, zero, nenhum item), não só o caso visto. Se o bug só existir na tela ou no sistema, o teste é de ponta a ponta.
-4. **Correção mínima**, em branch própria.
-5. **Teste verde:** o de regressão e a suíte inteira, com lint e build. Se o conserto mudar um critério, atualizar também o backlog e o README.
-6. **Enviar:** um commit com o bug e a causa na mensagem. Rodar a skill `revisar-antes-de-enviar`, mostrar o veredito e, com o OK do usuário, fazer o push e abrir o PR. Esperar o CI verde.
+3. **Teste de regressão:** escrever o teste na camada mais baixa que pega o bug, e rodar para **vê-lo falhar pelo motivo certo**. Mostrar a falha. Cobrir também o caso de borda (vazio, zero, nenhum item), não só o caso visto. Cada irmão com a mesma causa ganha o seu teste. Se o bug só existir na tela ou no sistema, o teste é de ponta a ponta.
+4. **Correção mínima**, em branch própria, incluindo os irmãos com a mesma causa. Se um dado mudar de formato, conferir todos os que o consomem, e não só o do bug.
+5. **Teste verde:** o de regressão e a suíte inteira, com lint e build. Rodar cada conferência numa etapa própria e ler o código de saída antes de seguir: nunca encadear conferência com commit, merge ou push no mesmo comando. Se o conserto mudar um critério, atualizar também o backlog e o README. Se mudar algo para quem usa, acrescentar uma linha em "Correções", na seção "Não lançado" do `CHANGELOG.md`.
+6. **Enviar:** um commit com o bug e a causa na mensagem. Rodar a skill `revisar-antes-de-enviar`, mostrar o veredito e, com o OK do usuário, fazer o push e abrir o PR. Esperar o CI verde **no commit exato enviado**: job pendente ou pulado não é verde.
 7. **Pedir o reteste** a quem relatou, com o passo exato que falhava.
 8. **Guardar a lição:** rodar a skill `guardar-licao` com o resultado da `causa-raiz`, sem refazer a análise.
