@@ -36,7 +36,7 @@ Os arquivos de versão, o que o CD gera e o teste rápido depois de publicar vê
    - `### Instalação`, com os arquivos que o CD gera e a versão anterior, se houver o que instalar.
 5. **Atualizar o README e o backlog** com o que a versão muda.
 6. **Se a versão mexeu no CD ou no build,** rodar o CD à mão nesta branch, porque o CI não prova o que o CD gera.
-7. **Enviar:** rodar a skill `revisar-antes-de-enviar`, mostrar o veredito e, se for ✅, fazer o push e abrir o PR. Esperar o CI verde.
+7. **Enviar:** chamar o agente `revisar-antes-de-enviar` (com a pasta, a branch e o resumo), mostrar o veredito e, se for ✅, fazer o push e abrir o PR. Esperar o CI verde.
 8. **PARAR e mostrar ao usuário** o texto do CHANGELOG, o número da versão e o motivo do número. Pedir o OK para o merge e a tag.
 9. **Com o OK:** fazer o merge, atualizar a branch principal local, conferir a versão nela e criar a tag `vX.Y.Z` no commit do merge. Enviar só essa tag.
 10. **Acompanhar o CD** até o fim.
