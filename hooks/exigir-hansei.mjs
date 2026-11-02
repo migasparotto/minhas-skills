@@ -3,6 +3,7 @@
 // Only a final summary is checked, and a final summary is the answer with "Kaizen:" lines (one per
 // item, a rule of ~/.claude/CLAUDE.md). Never by length: a long explanation is not a summary.
 import process from "node:process";
+import { pathToFileURL } from "node:url";
 
 /** Decides whether the turn may end. Returns null to allow, or the reason to keep going. */
 export function hanseiMissing({ stop_hook_active, last_assistant_message, background_tasks }) {
@@ -16,16 +17,19 @@ export function hanseiMissing({ stop_hook_active, last_assistant_message, backgr
     : 'O resumo final não tem a linha "Hansei:" preenchida. Chame o agente hansei (com o resumo, o diff e as afirmações feitas) e acrescente a linha "Hansei:" com o resultado antes de encerrar.';
 }
 
-const chunks = [];
-for await (const chunk of process.stdin) chunks.push(chunk);
-let input = {};
-try {
-  input = JSON.parse(Buffer.concat(chunks).toString("utf8") || "{}");
-} catch {
-  process.exit(0); // never block on a malformed input
-}
-const reason = hanseiMissing(input);
-if (reason) {
-  process.stderr.write(reason);
-  process.exit(2);
+// Reads the turn only when run as the hook, so tests can import the rule.
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+  const chunks = [];
+  for await (const chunk of process.stdin) chunks.push(chunk);
+  let input = {};
+  try {
+    input = JSON.parse(Buffer.concat(chunks).toString("utf8") || "{}");
+  } catch {
+    process.exit(0); // never block on a malformed input
+  }
+  const reason = hanseiMissing(input);
+  if (reason) {
+    process.stderr.write(reason);
+    process.exit(2);
+  }
 }
