@@ -1,6 +1,6 @@
 ---
 name: guardar-licao
-description: Guarda uma lição aprendida (kaizen) no lugar certo, em qualquer projeto. Usar quando o usuário disser "guarda a lição", quando aparecer na sessão um erro ou uma armadilha, quando algo demorar demais ou tiver retrabalho, quando o usuário corrigir o Claude, e na revisão de fim de sessão do "pmp boa noite". Escreve a lição em uma linha, decide o destino, mostra o diff e só grava com o OK dele.
+description: Guarda uma lição aprendida no lugar certo, em qualquer projeto. Usar quando o usuário disser "guarda a lição" ou "ok lição", quando houver erro, armadilha ou retrabalho na sessão, quando algo demorar demais, quando ele corrigir o Claude, e no "pmp boa noite". Só grava com o OK dele.
 ---
 
 # Guardar lição

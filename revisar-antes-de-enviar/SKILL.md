@@ -1,6 +1,6 @@
 ---
 name: revisar-antes-de-enviar
-description: Revisa o conjunto de commits que ainda não foi para o GitHub, antes do push, e termina com um veredito. Usar antes de qualquer push, no "pmp boa noite", ou quando o usuário pedir para revisar o que vai ser enviado. Só revisa e mostra; nunca faz o push nem corrige nada.
+description: Revisa os commits ainda não enviados e dá um veredito. Usar antes de qualquer push ou PR, no "pmp boa noite", e quando o usuário pedir para revisar ou perguntar se pode enviar. Só revisa: nunca faz o push nem corrige.
 ---
 
 # Revisar antes de enviar

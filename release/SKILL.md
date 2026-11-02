@@ -1,6 +1,6 @@
 ---
 name: release
-description: Prepara uma versão nova do app: decide o número pelo CHANGELOG, atualiza a versão, escreve as notas, abre o PR com CI verde e, com o OK do usuário, cria a tag, acompanha o CD e confere o rascunho. Usar quando o usuário pedir uma versão ou release, ou no fim de uma sprint que termina em versão. Nunca cria tag nem publica sem o OK dele.
+description: Leva uma versão nova até o rascunho do release conferido. Usar quando o usuário pedir uma "versão", "release" ou "tag", ou no fim de uma sprint que termina em versão. Nunca cria a tag nem publica sem o OK dele.
 ---
 
 # Release
