@@ -11,7 +11,10 @@ Transforma o que deu errado em uma linha, ou um teste, que evita o mesmo problem
 
 - O usuário disse "guarda a lição": seguir os passos agora.
 - Apareceu um erro ou uma armadilha, algo demorou demais, houve retrabalho ou o usuário corrigiu o Claude: terminar o que está em andamento e propor a lição. Sem o pedido dele, propor uma vez só; se ele recusar, não insistir.
-- "pmp boa noite": antes do commit, revisar a sessão e propor **no máximo 3 lições**, as mais úteis.
+- **O usuário apontou um kaizen que o Claude não viu:** sempre vira lição, e também ajuste na skill que deveria ter pegado (destino "Skill").
+- "pmp boa noite": antes do commit, revisar as falhas, correções e lacunas do dia com as 3 perguntas do kaizen (passo 9) e propor **no máximo 3 lições** e os kaizens, os mais úteis.
+
+**Lição ou kaizen?** Lição é algo que deu errado. Kaizen é algo que pode ficar melhor mesmo sem erro. Cada um tem o seu bloco no fim da mensagem.
 
 Não vale guardar o que o código, o histórico do git ou os documentos do projeto já contam, nem o que só importa nesta sessão.
 
@@ -42,7 +45,13 @@ Não vale guardar o que o código, o histórico do git ou os documentos do proje
    - **Só o que foi comprovado:** não gravar como regra uma hipótese ou uma correção que ainda não se provou.
 7. **Mostrar o diff, com a proposta no formato abaixo.**
 8. **Só gravar com o OK do usuário** ("ok lição"). Sem OK, nada muda. Se ele pedir ajuste, mostrar de novo. Esta skill grava o arquivo, mas não faz commit, exceto no caso abaixo.
-9. **Se o destino for uma skill existente,** gravar também um commit no repositório `minhas-skills`, com a mensagem dizendo qual erro ou lição causou a mudança: o histórico explica por que cada regra existe. O push passa pela skill `revisar-antes-de-enviar`.
+9. **Kaizen, antes de encerrar:** responder sempre as 3 perguntas, mesmo que a resposta seja "nenhum":
+   1. **Onde mais?** O mesmo problema existe em outro ambiente (teste, e2e local, CI, app no PC, CD), script, skill ou projeto?
+   2. **Que mecanismo impede a repetição?** Teste, script, regra do GitHub ou permissão, não só um texto (o passo 3 já procura isso para a lição; aqui vale para tudo o que foi achado).
+   3. **Em que camada?** Projeto (`CLAUDE.md` dele), todos os projetos (`~/.claude/CLAUDE.md`) ou projetos futuros (cartilha).
+
+   Se alguma resposta não for "nenhum", propor no formato 💡 KAIZEN PROPOSTO, abaixo, separado da lição.
+10. **Se o destino for uma skill existente,** gravar também um commit no repositório `minhas-skills`, com a mensagem dizendo qual erro ou lição causou a mudança: o histórico explica por que cada regra existe. O push passa pelo agente `revisar-antes-de-enviar`.
 
 ## Formato da proposta
 
@@ -58,6 +67,19 @@ Toda lição proposta aparece **no fim da mensagem**, sempre neste bloco, com um
 ---
 
 Com mais de uma lição, um bloco para cada, com o número no título (`LIÇÃO PROPOSTA 1`). "ok lição" grava todas; "ok lição 2" grava só aquela.
+
+Todo kaizen proposto vem depois das lições, no mesmo estilo de bloco:
+
+---
+> 💡 **KAIZEN PROPOSTO**  
+> **Melhoria:** <o que muda, em uma linha>  
+> **Onde mais:** <ambientes, scripts, skills ou projetos com a mesma lacuna | nenhum>  
+> **Mecanismo:** <teste, script, regra do GitHub ou permissão que faz a melhoria valer sozinha>  
+> **Camada:** Projeto | Todos os projetos | Projetos futuros (cartilha)  
+> Responda **"ok kaizen"** para fazer, ou diga o ajuste.
+---
+
+Com mais de um, numerar como as lições (`KAIZEN PROPOSTO 1`; "ok kaizen 2").
 
 ## Exemplos de lição
 
