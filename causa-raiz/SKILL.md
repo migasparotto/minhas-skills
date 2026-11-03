@@ -14,13 +14,14 @@ Leva do sintoma à causa, e da causa a uma regra que serve além deste caso.
 1. **Juntar a evidência:** a mensagem de erro, o arquivo ou o dado que mostra o que aconteceu. Sem evidência, buscá-la antes de analisar.
 2. **Cinco porquês:** perguntar "por quê?" sobre o que aconteceu, e de novo sobre cada resposta, até chegar à causa raiz. Cinco é uma referência: parar quando a próxima resposta sair do que se pode mudar.
 3. **Separar o comprovado da hipótese:** marcar cada resposta como comprovada (e por qual evidência) ou como hipótese. Se a cadeia parar numa hipótese, dizer isso em vez de inventar uma causa.
-4. **Procurar os irmãos:** buscar no código outras ocorrências da mesma causa e listá-las, com arquivo e linha. Dizer também onde se procurou, para "nenhum" significar alguma coisa. Só listar: quem decide o que fazer com eles é quem chamou.
-5. **Escrever em dois níveis:**
+4. **Experimento,** quando uma hipótese pode ser testada mudando algo: escrever antes de rodar (1) a hipótese; (2) o estado de partida, com prova (o que o ambiente já faz: configuração, exclusões, versões, lido de verdade); (3) a única variável que muda; (4) o tipo e o número de execuções, iguais dos dois lados (não comparar, por exemplo, disparo manual com push); (5) o critério que confirma e o que derruba a hipótese. Sem os cinco escritos, não é experimento, é tentativa.
+5. **Procurar os irmãos:** buscar no código outras ocorrências da mesma causa e listá-las, com arquivo e linha. Dizer também onde se procurou, para "nenhum" significar alguma coisa. Só listar: quem decide o que fazer com eles é quem chamou.
+6. **Escrever em dois níveis:**
    - **Regra geral:** o que acontece + o que fazer, sobre a causa e não sobre o sintoma.
    - **Caso:** o que aconteceu, em uma frase.
-6. **Teste de abstração:** a regra serviria em outro projeto, outra linguagem e outro tipo de ferramenta? Se só serve nesse tipo de ferramenta, subir um nível. O detalhe da ferramenta fica como exemplo.
-7. **Kaizen, antes de encerrar:** responder sempre as 3 perguntas, mesmo que a resposta seja "nenhum":
-   1. **Onde mais?** O mesmo problema existe em outro ambiente (teste, e2e local, CI, app no PC, CD), script, skill ou projeto? O passo 4 olha o código; este olha todo lugar onde o código roda e todo processo parecido.
+7. **Teste de abstração:** a regra serviria em outro projeto, outra linguagem e outro tipo de ferramenta? Se só serve nesse tipo de ferramenta, subir um nível. O detalhe da ferramenta fica como exemplo.
+8. **Kaizen, antes de encerrar:** responder sempre as 3 perguntas, mesmo que a resposta seja "nenhum":
+   1. **Onde mais?** O mesmo problema existe em outro ambiente (teste, e2e local, CI, app no PC, CD), script, skill ou projeto? O passo 5 olha o código; este olha todo lugar onde o código roda e todo processo parecido.
    2. **Que mecanismo impede a repetição?** Teste, script, regra do GitHub ou permissão, não só um texto.
    3. **Em que camada?** Projeto (`CLAUDE.md` dele), todos os projetos (`~/.claude/CLAUDE.md`) ou projetos futuros (cartilha).
 
