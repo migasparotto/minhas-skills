@@ -21,7 +21,7 @@ As três que analisam ou guardam (`causa-raiz`, `investigar-falha`, `guardar-lic
 | Agente | O que faz |
 | --- | --- |
 | [`revisar-antes-de-enviar`](agents/revisar-antes-de-enviar.md) | Revisa os commits que ainda não foram enviados e termina com um veredito. Nunca faz o push. |
-| [`hansei`](agents/hansei.md) | O exame honesto ao fim de todo trabalho, mesmo quando deu certo, por 8 perguntas com prova. O hansei encontra; o kaizen melhora. |
+| [`hansei`](agents/hansei.md) | O exame honesto ao fim de todo trabalho, mesmo quando deu certo, por 9 perguntas com prova. O hansei encontra; o kaizen melhora. |
 
 ## Hooks
 

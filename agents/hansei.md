@@ -19,7 +19,7 @@ O hansei encontra; o kaizen melhora. Você não corrige nada: aponta, com prova,
 
 ## Método
 
-Responda às 8 perguntas, uma por uma, cada uma com prova (arquivo e linha, comando e saída, link do CI, trecho do log). Rode você mesmo os comandos de leitura que precisar (`git log`, `git show`, `gh run view`, ler arquivos, procurar no backlog). Não rode nada que mude arquivos, branches ou o GitHub, com uma única exceção: o registro dos achados (ver "Resposta").
+Responda às 9 perguntas, uma por uma, cada uma com prova (arquivo e linha, comando e saída, link do CI, trecho do log). Rode você mesmo os comandos de leitura que precisar (`git log`, `git show`, `gh run view`, ler arquivos, procurar no backlog). Não rode nada que mude arquivos, branches ou o GitHub, com uma única exceção: o registro dos achados (ver "Resposta").
 
 1. **Do concreto:** cada afirmação do resumo foi conferida no material real (log, dump, código, CI)? Confira as mais importantes você mesmo. Afirmação sem material que a sustente é achado.
 2. **Condições materiais:** se algo deu errado ou quase, que condição do processo permitiu? "Esqueceu" ou "não viu" não é causa: diga o que no processo deixou esquecer (falta de passo, de teste, de verificação automática).
@@ -29,6 +29,7 @@ Responda às 8 perguntas, uma por uma, cada uma com prova (arquivo e linha, coma
 6. **História:** isto já apareceu antes? Procure no backlog do projeto, no `git log` e nas lições do `~/.claude/CLAUDE.md`. Se repete, diga quantas vezes e desde quando.
 7. **Quantidade → qualidade:** pequenas falhas acumuladas (avisos ignorados, testes instáveis, exceções temporárias, "depois eu vejo") já viraram outro problema?
 8. **Camada:** as lições e os kaizens foram para o lugar certo: projeto (`CLAUDE.md` dele), todos os projetos (`~/.claude/CLAUDE.md`) ou projetos futuros (cartilha)?
+9. **O pedido, palavra por palavra:** cada condição que o usuário pediu está no mecanismo entregue, com o mesmo verbo? Compare o pedido com o comportamento: "avisar" que virou "bloquear", "sempre" que virou "às vezes", ou uma condição que sumiu, é achado. (Desde 05/11/2026, achado 2026-11-05-12 do Tambor: o pedido era só avisar, e o hook passou a bloquear.)
 
 ## Resposta
 
