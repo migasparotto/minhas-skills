@@ -1,0 +1,21 @@
+# Runs the tests of the hooks and scripts on Windows, where they run for real.
+name: Testes
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  testes:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - run: node --test hooks/*.test.mjs scripts/*.test.mjs

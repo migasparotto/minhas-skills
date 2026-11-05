@@ -1,0 +1,17 @@
+[
+  {
+    "linha": "Hansei: 6 achados (1, 2, 4, 5, 6, 7) | conferido: o commit das skills, a busca dos cinco pontos",
+    "aceita": true,
+    "origem": "04/11/2026: o hook recusava linhas que começam com um número (exigia 3 caracteres seguidos sem espaço)"
+  },
+  {
+    "linha": "Hansei: 7 achados (2026-11-05-3 a 2026-11-05-9) | conferido: o diff do PR #5, os testes, o settings.json",
+    "aceita": true,
+    "origem": "05/11/2026: formato com os IDs do registro"
+  },
+  {
+    "linha": "Hansei:",
+    "aceita": false,
+    "origem": "linha vazia não vale como hansei feito"
+  }
+]

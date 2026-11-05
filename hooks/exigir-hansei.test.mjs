@@ -1,7 +1,7 @@
 // Tests of the Stop hook rule. Run with: node --test hooks/*.test.mjs
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -72,4 +72,26 @@ test("citing a longer ID does not count as citing a shorter one", () => {
   const summary = { last_assistant_message: "Kaizen: nenhum\nHansei: 1 achado (2026-11-05-12)" };
   assert.match(openFindingsMissing(summary, ["2026-11-05-1"]), /2026-11-05-1/);
   assert.equal(openFindingsMissing(summary, ["2026-11-05-12"]), null);
+});
+
+// Regression cases: every real "Hansei:" line the hook got wrong is kept in casos-reais-hansei.json.
+test("real Hansei lines: each known case is judged right", () => {
+  const cases = JSON.parse(readFileSync(new URL("./casos-reais-hansei.json", import.meta.url), "utf8"));
+  for (const { linha, aceita, origem } of cases) {
+    const verdict = hanseiMissing({ last_assistant_message: `Kaizen: nenhum\n${linha}` });
+    assert.equal(verdict === null, aceita, `${linha} (${origem})`);
+  }
+});
+
+// The hook and the agent must agree on the format: the line the agent is told to write is accepted.
+test("the format line of agents/hansei.md, filled in, is accepted", () => {
+  const agent = readFileSync(new URL("../agents/hansei.md", import.meta.url), "utf8");
+  const format = agent.match(/^`(Hansei:[^`]+)`$/m)?.[1];
+  assert.ok(format, "agents/hansei.md não tem mais a linha de formato `Hansei: ...`");
+  for (const option of format.split(" | ")) {
+    const filled = (option.startsWith("Hansei:") ? option : `Hansei: ${option}`)
+      .replace("<N>", "3")
+      .replace(/<[^>]+>/g, "exemplo");
+    assert.equal(hanseiMissing({ last_assistant_message: `Kaizen: nenhum\n${filled}` }), null, filled);
+  }
 });
