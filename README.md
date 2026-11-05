@@ -37,7 +37,7 @@ As três que analisam ou guardam (`causa-raiz`, `investigar-falha`, `guardar-lic
 | [`hansei-registro.mjs`](scripts/hansei-registro.mjs) | Registro dos achados do hansei (`docs/hansei.md` de cada projeto), com status `aberto`, `aceito`, `feito` ou `recusado pelo usuário` (este sempre com o motivo). |
 | [`prs-do-dia.mjs`](scripts/prs-do-dia.mjs) | Lista os PRs que entraram na main num dia, para conferir o Todoist e o Notion no "pmp boa noite". |
 
-Testes: `node --test hooks/*.test.mjs scripts/*.test.mjs`.
+Testes: `node --test hooks/*.test.mjs scripts/*.test.mjs`, também no CI (workflow `Testes`, no Windows). As linhas "Hansei:" reais que o hook já errou ficam em `hooks/casos-reais-hansei.json`.
 
 ## O histórico é parte do conteúdo
 

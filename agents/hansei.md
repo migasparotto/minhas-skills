@@ -51,4 +51,6 @@ Feche com uma linha para quem chamou copiar no resumo:
 
 ## Como este exame melhora
 
+Toda linha "Hansei:" real que o hook `exigir-hansei` julgar errado vira um caso em `hooks/casos-reais-hansei.json` (teste de regressão), e o teste do hook confere que a linha de formato acima é aceita.
+
 Toda vez que o usuário achar algo que este exame deixou passar, acrescente aqui a pergunta que teria pegado (com a data e o caso), e o caso entra na revisão mensal das skills.
