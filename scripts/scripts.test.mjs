@@ -51,8 +51,9 @@ test("registry as a command: add, list open, change status", () => {
 });
 
 test("PRs of the day: search by merge date into main, oldest first", () => {
-  const args = ghArgs("2026-11-05", "dono/repo");
-  assert.ok(args.includes("merged:2026-11-05"));
+  const args = ghArgs("2026-11-05", "dono/repo", -180);
+  assert.ok(args.includes("merged:2026-11-05T00:00:00-03:00..2026-11-05T23:59:59-03:00"));
+  assert.ok(ghArgs("2026-11-05", null, 330).includes("merged:2026-11-05T00:00:00+05:30..2026-11-05T23:59:59+05:30"));
   assert.deepEqual(args.slice(-2), ["--repo", "dono/repo"]);
   assert.ok(!ghArgs("2026-11-05", null).includes("--repo"));
   const prs = [
@@ -62,6 +63,20 @@ test("PRs of the day: search by merge date into main, oldest first", () => {
   assert.deepEqual(format("dono/repo", prs), ["dono/repo#1 A (u1)", "dono/repo#2 B (u2)"]);
   assert.deepEqual(format("dono/repo", []), ["dono/repo: nenhum PR entrou na main."]);
   assert.equal(today(new Date(2026, 10, 5, 23, 30)), "2026-11-05");
+});
+
+test("PRs of the day: a merge at 22:28 (-03:00) belongs to that local day, not to the next", () => {
+  // PRs #39 and #41 of the Tambor: merged on 04/11 at 22:28 local time = 05/11 01:28 UTC.
+  const mergedAt = Date.parse("2026-11-05T01:28:00Z");
+  const window = (day) => {
+    const search = ghArgs(day, null, -180).find((a) => a.startsWith("merged:"));
+    const [start, end] = search.slice("merged:".length).split("..").map(Date.parse);
+    return { start, end };
+  };
+  const day4 = window("2026-11-04");
+  const day5 = window("2026-11-05");
+  assert.ok(day4.start <= mergedAt && mergedAt <= day4.end, "fica em 04/11");
+  assert.ok(!(day5.start <= mergedAt && mergedAt <= day5.end), "não fica em 05/11");
 });
 
 test("registry: the ID uses the local day, also late at night", () => {
