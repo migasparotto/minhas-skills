@@ -3,14 +3,17 @@ import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 import { findInRepository, findProblems } from "./caminhos.mjs";
 
-const B = String.fromCharCode(92); // a backslash, built so this file does not break its own rules
+// Built in parts, so this file (scanned by its own test) does not break the rules it checks.
+const B = String.fromCharCode(92); // a backslash
+const U = "Users";
+const C = "C:";
 
 test("paths: finds a broken path, where the backslash after C: was lost", () => {
-  assert.equal(findProblems("worktree em C:Projetosminhas-skills").length, 1);
+  assert.equal(findProblems(`worktree em ${C}Projetosminhas-skills`).length, 1);
 });
 
 test("paths: finds personal paths in the three spellings", () => {
-  for (const path of [`C:${B}Users${B}fulano`, "C:/Users/fulano", "/c/Users/fulano"]) {
+  for (const path of [`${C}${B}${U}${B}fulano`, `${C}/${U}/fulano`, `/c/${U}/fulano`]) {
     assert.equal(findProblems(`em ${path}${B}notas`).length, 1);
   }
 });
