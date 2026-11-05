@@ -29,6 +29,7 @@ As três que analisam ou guardam (`causa-raiz`, `investigar-falha`, `guardar-lic
 | --- | --- |
 | [`exigir-hansei.mjs`](hooks/exigir-hansei.mjs) | Hook de parada (Stop): recusa encerrar um resumo final (com linhas "Kaizen:") que não tenha a linha "Hansei:" preenchida, ou que deixe de citar um achado ainda `aberto` no `docs/hansei.md` do projeto. |
 | [`aviso-tempo-de-chat.mjs`](hooks/aviso-tempo-de-chat.mjs) | Ao enviar uma mensagem (UserPromptSubmit): quando o contexto da sessão passa de 300 mil tokens, e de novo a cada 50 mil, pede o aviso "Tempo de chat" no fim da resposta. Só avisa, nunca trava. |
+| [`aviso-skills-fora-da-main.mjs`](hooks/aviso-skills-fora-da-main.mjs) | Ao iniciar a sessão (SessionStart): avisa quando esta pasta, que o `~/.claude/skills` e o `~/.claude/agents` usam, não está na `main`. O desenvolvimento é feito no worktree `C:Projetosminhas-skills-dev`. Só avisa, nunca trava. |
 
 ## Scripts
 
@@ -52,12 +53,21 @@ mklink /J "%USERPROFILE%\.claude\skills" "C:\caminho\para\minhas-skills"
 mklink /J "%USERPROFILE%\.claude\agents" "C:\caminho\para\minhas-skills\agents"
 ```
 
+**Onde desenvolver:** a pasta dos atalhos fica sempre na `main`, porque todas as sessões usam o que está nela. Mudanças são feitas num worktree separado, numa branch própria:
+
+```bat
+git -C C:caminhoparaminhas-skills worktree add C:caminhoparaminhas-skills-dev -b <branch> origin/main
+```
+
+Depois do merge, `git -C C:caminhoparaminhas-skills pull` atualiza a pasta dos atalhos.
+
 Os hooks são chamados direto daqui, no `~/.claude/settings.json`:
 
 ```json
 "hooks": {
   "Stop": [{ "hooks": [{ "type": "command", "command": "node \"C:/caminho/para/minhas-skills/hooks/exigir-hansei.mjs\"" }] }],
-  "UserPromptSubmit": [{ "hooks": [{ "type": "command", "command": "node \"C:/caminho/para/minhas-skills/hooks/aviso-tempo-de-chat.mjs\"" }] }]
+  "UserPromptSubmit": [{ "hooks": [{ "type": "command", "command": "node \"C:/caminho/para/minhas-skills/hooks/aviso-tempo-de-chat.mjs\"" }] }],
+  "SessionStart": [{ "hooks": [{ "type": "command", "command": "node \"C:/caminho/para/minhas-skills/hooks/aviso-skills-fora-da-main.mjs\"" }] }]
 }
 ```
 
