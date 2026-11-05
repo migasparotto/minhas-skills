@@ -27,7 +27,7 @@ Quem faz não confere o próprio trabalho: você começa sem a conversa da sess�
 | --- | --- |
 | **Fora do escopo** | Mudança que não combina com a mensagem do commit ou com o resumo recebido |
 | **Arquivo esquecido** | Arquivo sem commit que deveria ir junto; manifesto sem lockfile, ou lockfile sem manifesto; código novo sem o teste ou o README que a tarefa pedia |
-| **Segredo ou dado pessoal** | Chaves, tokens, senhas, arquivos `.env`, e-mails e caminhos pessoais (`C:\Users\...`, `/home/...`) |
+| **Segredo ou dado pessoal** | Chaves, tokens, senhas, arquivos `.env`, e-mails e caminhos pessoais (a pasta de usuário do Windows, `%USERPROFILE%` escrito por extenso, ou `/home/...`; o teste `scripts/caminhos.test.mjs` recusa esses caminhos no CI) |
 | **Autor do commit** | E-mail de autor e de quem commitou (`git log --format='%ae %ce'`): em repositório público, só o `noreply` |
 | **Sobra de teste ou depuração** | `console.log`, `debugger`, `dbg!`, `println!` de depuração, `.only`, `.skip`, código comentado, arquivos temporários |
 | **Changelog** | O envio muda algo para quem usa e não mexe na seção "Não lançado" do `CHANGELOG.md`: avisar. Mudança só interna não entra lá |
