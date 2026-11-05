@@ -30,7 +30,8 @@ export function openFindingsMissing({ stop_hook_active, last_assistant_message, 
   const text = last_assistant_message ?? "";
   if (stop_hook_active || (background_tasks ?? []).length > 0) return null;
   if (!/^\W*Kaizen:/im.test(text)) return null;
-  const missing = open.filter((id) => !text.includes(id));
+  // Whole IDs only: citing 2026-11-05-12 must not count as citing 2026-11-05-1.
+  const missing = open.filter((id) => !new RegExp(`(?<![\\d-])${id}(?!\\d)`).test(text));
   return missing.length === 0
     ? null
     : `O resumo final não cita os achados do hansei ainda abertos em docs/hansei.md: ${missing.join(", ")}. Mostre cada um ao usuário (achado e ID) para ele decidir; nenhum achado é recusado por conta própria.`;

@@ -63,3 +63,10 @@ test("PRs of the day: search by merge date into main, oldest first", () => {
   assert.deepEqual(format("dono/repo", []), ["dono/repo: nenhum PR entrou na main."]);
   assert.equal(today(new Date(2026, 10, 5, 23, 30)), "2026-11-05");
 });
+
+test("registry: the ID uses the local day, also late at night", () => {
+  const late = new Date(2026, 10, 5, 23, 30); // 05/11 23:30 local time
+  const { id, rows } = add([], "Achado", late);
+  assert.equal(id, "2026-11-05-1");
+  assert.equal(rows[0].date, "05/11/2026");
+});

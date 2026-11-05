@@ -67,3 +67,9 @@ test("as a hook: holds a summary that leaves out an open finding of docs/hansei.
   assert.match(held.stderr, /2026-11-05-1/);
   assert.equal(run("Kaizen: nenhum\nHansei: 1 achado (2026-11-05-1)").status, 0);
 });
+
+test("citing a longer ID does not count as citing a shorter one", () => {
+  const summary = { last_assistant_message: "Kaizen: nenhum\nHansei: 1 achado (2026-11-05-12)" };
+  assert.match(openFindingsMissing(summary, ["2026-11-05-1"]), /2026-11-05-1/);
+  assert.equal(openFindingsMissing(summary, ["2026-11-05-12"]), null);
+});

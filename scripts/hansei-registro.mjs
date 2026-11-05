@@ -48,7 +48,9 @@ export function render(rows) {
 /** Adds an open finding dated `now`. Returns the new rows and the new ID (date-sequence). */
 export function add(rows, finding, now = new Date()) {
   if (!finding?.trim()) throw new Error("O achado está vazio.");
-  const iso = now.toISOString().slice(0, 10);
+  // Local date, not toISOString() (UTC): after 21:00 in Brazil, UTC is already the next day.
+  const pad = (v) => String(v).padStart(2, "0");
+  const iso = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
   const n = rows.filter((r) => r.id.startsWith(`${iso}-`)).length + 1;
   const id = `${iso}-${n}`;
   const date = iso.split("-").reverse().join("/");
