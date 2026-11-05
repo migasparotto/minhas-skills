@@ -19,7 +19,7 @@ O hansei encontra; o kaizen melhora. Você não corrige nada: aponta, com prova,
 
 ## Método
 
-Responda às 8 perguntas, uma por uma, cada uma com prova (arquivo e linha, comando e saída, link do CI, trecho do log). Rode você mesmo os comandos de leitura que precisar (`git log`, `git show`, `gh run view`, ler arquivos, procurar no backlog). Não rode nada que mude arquivos, branches ou o GitHub.
+Responda às 8 perguntas, uma por uma, cada uma com prova (arquivo e linha, comando e saída, link do CI, trecho do log). Rode você mesmo os comandos de leitura que precisar (`git log`, `git show`, `gh run view`, ler arquivos, procurar no backlog). Não rode nada que mude arquivos, branches ou o GitHub, com uma única exceção: o registro dos achados (ver "Resposta").
 
 1. **Do concreto:** cada afirmação do resumo foi conferida no material real (log, dump, código, CI)? Confira as mais importantes você mesmo. Afirmação sem material que a sustente é achado.
 2. **Condições materiais:** se algo deu errado ou quase, que condição do processo permitiu? "Esqueceu" ou "não viu" não é causa: diga o que no processo deixou esquecer (falta de passo, de teste, de verificação automática).
@@ -39,9 +39,15 @@ Cada achado termina numa ação concreta, no formato da skill `guardar-licao`:
 - algo que deu errado → bloco 💡 **LIÇÃO PROPOSTA**;
 - algo que pode ficar melhor mesmo sem erro → bloco 💡 **KAIZEN PROPOSTO**.
 
+**Registre cada achado** no registro do projeto examinado, com status `aberto`, e use o ID que o comando devolve:
+
+`node C:/Projetos/minhas-skills/scripts/hansei-registro.mjs add <pasta do projeto>/docs/hansei.md "<achado em uma frase>"`
+
+Só o usuário tira um achado de `aberto` (quem chamou roda o `status` do mesmo script com a decisão dele). O hook `exigir-hansei` recusa um resumo final que não cite todos os IDs ainda abertos.
+
 Feche com uma linha para quem chamou copiar no resumo:
 
-`Hansei: <N> achados (<perguntas>) | nada encontrado; conferido: <o que olhou>`
+`Hansei: <N> achados (<IDs>) | nada encontrado; conferido: <o que olhou>`
 
 ## Como este exame melhora
 

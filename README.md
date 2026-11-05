@@ -27,7 +27,17 @@ As três que analisam ou guardam (`causa-raiz`, `investigar-falha`, `guardar-lic
 
 | Hook | O que faz |
 | --- | --- |
-| [`exigir-hansei.mjs`](hooks/exigir-hansei.mjs) | Hook de parada (Stop): recusa encerrar um resumo final (com linhas "Kaizen:") que não tenha a linha "Hansei:" preenchida. |
+| [`exigir-hansei.mjs`](hooks/exigir-hansei.mjs) | Hook de parada (Stop): recusa encerrar um resumo final (com linhas "Kaizen:") que não tenha a linha "Hansei:" preenchida, ou que deixe de citar um achado ainda `aberto` no `docs/hansei.md` do projeto. |
+| [`aviso-tempo-de-chat.mjs`](hooks/aviso-tempo-de-chat.mjs) | Ao enviar uma mensagem (UserPromptSubmit): quando o contexto da sessão passa de 300 mil tokens, e de novo a cada 50 mil, pede o aviso "Tempo de chat" no fim da resposta. Só avisa, nunca trava. |
+
+## Scripts
+
+| Script | O que faz |
+| --- | --- |
+| [`hansei-registro.mjs`](scripts/hansei-registro.mjs) | Registro dos achados do hansei (`docs/hansei.md` de cada projeto), com status `aberto`, `aceito`, `feito` ou `recusado pelo usuário` (este sempre com o motivo). |
+| [`prs-do-dia.mjs`](scripts/prs-do-dia.mjs) | Lista os PRs que entraram na main num dia, para conferir o Todoist e o Notion no "pmp boa noite". |
+
+Testes: `node --test hooks/*.test.mjs scripts/*.test.mjs`.
 
 ## O histórico é parte do conteúdo
 
@@ -42,10 +52,13 @@ mklink /J "%USERPROFILE%\.claude\skills" "C:\caminho\para\minhas-skills"
 mklink /J "%USERPROFILE%\.claude\agents" "C:\caminho\para\minhas-skills\agents"
 ```
 
-O hook é chamado direto daqui, no `~/.claude/settings.json`:
+Os hooks são chamados direto daqui, no `~/.claude/settings.json`:
 
 ```json
-"hooks": { "Stop": [{ "hooks": [{ "type": "command", "command": "node \"C:/caminho/para/minhas-skills/hooks/exigir-hansei.mjs\"" }] }] }
+"hooks": {
+  "Stop": [{ "hooks": [{ "type": "command", "command": "node \"C:/caminho/para/minhas-skills/hooks/exigir-hansei.mjs\"" }] }],
+  "UserPromptSubmit": [{ "hooks": [{ "type": "command", "command": "node \"C:/caminho/para/minhas-skills/hooks/aviso-tempo-de-chat.mjs\"" }] }]
+}
 ```
 
 A pasta `synced/`, que o Claude Code mantém sozinho, fica fora do repositório.
