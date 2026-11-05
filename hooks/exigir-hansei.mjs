@@ -37,7 +37,7 @@ export function openFindingsMissing({ stop_hook_active, last_assistant_message, 
 }
 
 // Reads the turn only when run as the hook, so tests can import the rule.
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const chunks = [];
   for await (const chunk of process.stdin) chunks.push(chunk);
   let input = {};

@@ -28,7 +28,7 @@ export function today(now = new Date()) {
 }
 
 // Runs only as a command, so tests can import the rules.
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const args = process.argv.slice(2);
   const day = /^\d{4}-\d{2}-\d{2}$/.test(args[0] ?? "") ? args.shift() : today();
   const repos = args.length > 0 ? args : [null];

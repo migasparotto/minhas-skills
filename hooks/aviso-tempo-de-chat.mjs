@@ -73,7 +73,7 @@ function readTail(path) {
 }
 
 // Runs only as the hook, so tests can import the rules.
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   try {
     const chunks = [];
     for await (const chunk of process.stdin) chunks.push(chunk);

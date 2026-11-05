@@ -72,7 +72,7 @@ export function setStatus(rows, id, status, reason = "") {
 export const openIds = (rows) => rows.filter((r) => r.status === "aberto").map((r) => r.id);
 
 // Runs only as a command, so tests can import the rules.
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const [command, file, ...args] = process.argv.slice(2);
   try {
     if (!file) throw new Error("Uso: hansei-registro.mjs add|status|abertos <arquivo> ...");
