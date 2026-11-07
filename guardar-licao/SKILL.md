@@ -51,7 +51,7 @@ Não vale guardar o que o código, o histórico do git ou os documentos do proje
    3. **Em que camada?** Projeto (`CLAUDE.md` dele), todos os projetos (`~/.claude/CLAUDE.md`) ou projetos futuros (cartilha).
 
    Se alguma resposta não for "nenhum", propor no formato 💡 KAIZEN PROPOSTO, abaixo, separado da lição.
-10. **Se o destino for uma skill existente,** gravar também um commit no repositório `minhas-skills`, com a mensagem dizendo qual erro ou lição causou a mudança: o histórico explica por que cada regra existe. O push passa pelo agente `revisar-antes-de-enviar`.
+10. **Se o destino for uma skill existente,** gravar também um commit no repositório `minhas-skills`, com a mensagem dizendo qual erro ou lição causou a mudança: o histórico explica por que cada regra existe. O commit é feito no worktree `C:\Projetos\minhas-skills-dev`, numa branch própria, e entra por PR: a `main` do minhas-skills é protegida (ruleset "Proteção De Main", com o check `testes`) e recusa push direto. O push passa pelo agente `revisar-antes-de-enviar`.
 
 ## Formato da proposta
 
