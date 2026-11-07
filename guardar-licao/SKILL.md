@@ -43,6 +43,7 @@ Não vale guardar o que o código, o histórico do git ou os documentos do proje
    - **Regra geral primeiro:** o detalhe da ferramenta ou do sistema vem depois, como o "como" ou o exemplo.
    - **Ação concreta:** dizer o que fazer. Evitar "lembrar que", "ter cuidado", "prestar atenção".
    - **Só o que foi comprovado:** não gravar como regra uma hipótese ou uma correção que ainda não se provou.
+   - **Estado consultado na hora:** para cada estado que a lição cita (feito, apagado, no ar, mecanismo existente, PR enviado), rodar a consulta agora (API, `git log`, arquivo) e colar o resultado ao lado na proposta. Um mecanismo que ainda não está na `main` é escrito como "no PR #N, ainda não enviado". (Kaizen do usuário, 07/11/2026: hansei 2026-11-07-1 e -3.)
 7. **Mostrar o diff, com a proposta no formato abaixo.**
 8. **Só gravar com o OK do usuário** ("ok lição"). Sem OK, nada muda. Se ele pedir ajuste, mostrar de novo. Esta skill grava o arquivo, mas não faz commit, exceto no caso abaixo.
 9. **Kaizen, antes de encerrar:** responder sempre as 3 perguntas, mesmo que a resposta seja "nenhum":
