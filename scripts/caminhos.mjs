@@ -1,4 +1,4 @@
-// Finds, in the versioned files, Windows paths that are broken (a "C:" glued to a letter, with the
+// Finds, in the versioned and new (untracked, not ignored) files, Windows paths that are broken (a "C:" glued to a letter, with the
 // backslash lost) or personal (a user folder, which exposes the user name in a public repository).
 // Use relative paths or ~ instead. Run by its test (scripts/caminhos.test.mjs) in the CI. Same file as in tambor-de-notas.
 import { execFileSync } from "node:child_process";
@@ -30,9 +30,10 @@ export function findProblems(text) {
   return problems;
 }
 
-/** Problems in every versioned text file of the repository at `root` (lockfiles skipped). */
+/** Problems in every versioned or new (untracked, not ignored) text file of the repository at `root` (lockfiles skipped). */
 export function findInRepository(root) {
-  const files = execFileSync("git", ["-C", root, "ls-files"], { encoding: "utf8" })
+  const args = ["-C", root, "ls-files", "--cached", "--others", "--exclude-standard"];
+  const files = execFileSync("git", args, { encoding: "utf8" })
     .split("\n")
     .filter((f) => f && !/(^|\/)(package-lock\.json|Cargo\.lock)$/.test(f));
   const problems = [];
@@ -41,7 +42,7 @@ export function findInRepository(root) {
     try {
       text = readFileSync(join(root, file), "utf8");
     } catch {
-      continue; // listed but missing (deleted, not yet committed)
+      continue; // listed but missing (deleted, the deletion not yet committed)
     }
     if (text.includes("\0")) continue; // binary
     for (const p of findProblems(text)) problems.push({ file, ...p });
