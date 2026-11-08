@@ -14,6 +14,12 @@ Trabalho que vale para todos os projetos: skills, agentes, hooks, scripts e a co
   - Teste de ponta a ponta do modo ao vivo: com o app aberto, `query_entities` pelo `cadcraft-live` devolve `count`; com ele fechado, o erro claro. O "Connected" do `--lazy` não prova a conexão.
   - Resolve os achados de sistema 2026-11-07-1, -2 e -8. Evidência de 07/11: o `~/.claude` do Ubuntu só tem `backups`, `cache`, `downloads`, `ide` e `sessions`, sem `settings.json`, e `command -v node` não acha nada. Estado: não iniciado.
 
+- **S4. IDs do registro do hansei sem repetição** (kaizen do usuário, 08/11; só registrado, não executado, regra do achado 2026-11-08-4). Origem: o `hansei-registro.mjs add` deu os IDs 2026-11-08-2 a -4, que já existiam na branch `docs/hansei-2026-11-08`, ainda sem merge; foram trocados à mão para 08-6 a 08-8 no PR #17.
+  - O `hansei-registro.mjs` procura os IDs existentes em todas as branches: locais, remotas e worktrees, e não só nas enviadas.
+  - Um teste no CI falha se houver ID repetido no registro, como rede de segurança para duas sessões gravando ao mesmo tempo ou uma branch que o script não viu.
+  - Teste do script: com um ID já usado numa branch local não enviada, o `add` gera o próximo livre.
+  - Estado: não iniciado.
+
 ## Feito
 
 - **(antes item 21 do Tambor) `hansei-registro.mjs` escapava o `|` de novo a cada gravação:** corrigido no PR #12 (merge `667cc5b`), com o teste "registry: rewriting keeps the old rows byte for byte, escaped bars included" (`scripts/scripts.test.mjs`), que falhou antes da correção; os achados de sistema A, B e C do hansei do #12 foram gravados no PR #13 (merge `87adeb1`).
