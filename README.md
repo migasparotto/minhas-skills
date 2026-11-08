@@ -27,7 +27,8 @@ As três que analisam ou guardam (`causa-raiz`, `investigar-falha`, `guardar-lic
 
 | Hook | O que faz |
 | --- | --- |
-| [`exigir-hansei.mjs`](hooks/exigir-hansei.mjs) | Hook de parada (Stop): recusa encerrar um resumo final (com linhas "Kaizen:") que não tenha a linha "Hansei:" preenchida, ou que deixe de citar um achado ainda `aberto` no `docs/hansei.md` do projeto. |
+| [`exigir-hansei.mjs`](hooks/exigir-hansei.mjs) | Hook de parada (Stop): recusa encerrar um resumo final (com linhas "Kaizen:") que não tenha a linha "Hansei:" preenchida, ou que deixe de citar um achado ainda `aberto` em um dos dois registros: o `docs/hansei.md` do projeto e o do sistema (o `docs/hansei.md` deste repositório; `HANSEI_REGISTRO_SISTEMA` troca o caminho, para os testes). |
+| [`aviso-mcp-altera.mjs`](hooks/aviso-mcp-altera.mjs) | **Proposto, ainda não ligado.** Antes de uma ferramenta dos MCPs `cadcraft`/`cadcraft-live` que muda o desenho aberto ou grava arquivo (PreToolUse, matcher `mcp__cadcraft(-live)?__(command_line\|script\|execute\|new_drawing\|open\|cancel\|save\|render)`), pede a aprovação do usuário com o motivo "⚠️ ALTERA:". Será ligado no Claude do Ubuntu, onde ficam esses MCPs; por isso não está no `settings.json` abaixo. |
 | [`aviso-tempo-de-chat.mjs`](hooks/aviso-tempo-de-chat.mjs) | Ao enviar uma mensagem (UserPromptSubmit): quando o contexto da sessão passa de 300 mil tokens, e de novo a cada 50 mil, pede o aviso "Tempo de chat" no fim da resposta. Só avisa, nunca trava. |
 | [`aviso-skills-fora-da-main.mjs`](hooks/aviso-skills-fora-da-main.mjs) | Ao iniciar a sessão (SessionStart): avisa quando esta pasta, que o `~/.claude/skills` e o `~/.claude/agents` usam, não está na `main`. O desenvolvimento é feito no worktree `C:\Projetos\minhas-skills-dev`. Só avisa, nunca trava. |
 
