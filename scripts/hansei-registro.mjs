@@ -23,7 +23,7 @@ const HEADER = [
 
 const cell = (text) => String(text).replace(/\r?\n/g, " ").replace(/\|/g, "\\|").trim();
 
-/** Reads the rows of a registry text. */
+/** Reads the rows of a registry text. Cells come back unescaped, so render() escapes them only once. */
 export function parse(text) {
   return text
     .split("\n")
@@ -32,7 +32,7 @@ export function parse(text) {
       const [id, date, finding, status, decision] = line
         .slice(2, -2)
         .split(/ (?<!\\)\| /)
-        .map((c) => c.trim());
+        .map((c) => c.trim().replace(/\\\|/g, "|"));
       return { id, date, finding, status, decision: decision ?? "" };
     });
 }

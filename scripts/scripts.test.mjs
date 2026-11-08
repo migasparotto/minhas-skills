@@ -24,6 +24,17 @@ test("registry: new findings are open, numbered per day, and survive a round tri
   assert.deepEqual(openIds(back), ["2026-11-05-1", "2026-11-05-2"]);
 });
 
+// Item 21 of the Tambor backlog: every rewrite added a backslash before each "|" of the old rows.
+test("registry: rewriting keeps the old rows byte for byte, escaped bars included", () => {
+  const text = render(add([], "item | estado | evidência", day).rows);
+  const old = (t) => t.split("\n").find((l) => l.startsWith("| 2026-11-05-1 |"));
+  assert.equal(parse(text)[0].finding, "item | estado | evidência");
+  assert.equal(render(parse(text)), text);
+  const next = render(add(parse(text), "Outro", day).rows);
+  assert.equal(old(next), old(text));
+  assert.equal(old(render(setStatus(parse(next), "2026-11-05-2", "aceito"))), old(text));
+});
+
 test("registry: only valid statuses; refusing needs the user's reason", () => {
   const { rows } = add([], "Achado", day);
   assert.throws(() => setStatus(rows, "2026-11-05-1", "talvez"), /inválido/);
