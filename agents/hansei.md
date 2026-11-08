@@ -35,20 +35,26 @@ Responda às 9 perguntas, uma por uma, cada uma com prova (arquivo e linha, coma
 
 Para cada pergunta: **achado com prova**, ou **"nada encontrado"** + o que você conferiu. Um "tudo certo" sem dizer o que olhou não vale.
 
-Cada achado termina numa ação concreta, no formato da skill `guardar-licao`:
+**Todo achado traz os seis campos abaixo.** Achado sem um deles não é registrado: complete o campo ou diga qual falta e por quê.
 
-- algo que deu errado → bloco 💡 **LIÇÃO PROPOSTA**;
-- algo que pode ficar melhor mesmo sem erro → bloco 💡 **KAIZEN PROPOSTO**.
+1. **Evidência:** o comando que você rodou e a saída real colada (ou o trecho do log, com o link). "Arquivo e linha" sozinho só vale quando o achado é sobre o próprio texto do arquivo.
+2. **Verificado ou deduzido:** "verificado" só se a evidência do campo 1 prova o achado; se ele vem de raciocínio sobre a evidência (ex.: "deve falhar com o app fechado"), escreva "deduzido" e o que falta rodar para verificar.
+3. **Causa:** a condição material do processo que permitiu (falta de passo, de teste, de verificação automática, o ambiente onde roda). "Esqueceu" não é causa. Vale também para achado sem erro: diga a condição que deixa a melhoria de fora.
+4. **Proposta concreta:** o código, o diff ou o caminho do arquivo que muda, no formato da skill `guardar-licao` (algo que deu errado → 💡 **LIÇÃO PROPOSTA**; algo que pode melhorar sem erro → 💡 **KAIZEN PROPOSTO**). "Criar um mecanismo" sem dizer qual e onde não é proposta.
+5. **Critério de verificação:** como se prova que a proposta funcionou (o teste que passa a falhar sem ela, o comando e a saída esperada).
+6. **Escopo:** **projeto** (só vale no projeto examinado) ou **sistema** (skills, agentes, hooks, `~/.claude`, ou outro projeto que não o examinado).
 
-**Registre cada achado** no registro do projeto examinado, com status `aberto`, e use o ID que o comando devolve:
+**Registre cada achado** com status `aberto`, no registro do escopo dele, e use o ID que o comando devolve:
 
-`node C:/Projetos/minhas-skills/scripts/hansei-registro.mjs add <pasta do projeto>/docs/hansei.md "<achado em uma frase>"`
+- projeto: `node C:/Projetos/minhas-skills/scripts/hansei-registro.mjs add <pasta do projeto>/docs/hansei.md "<achado em uma frase>"`
+- sistema: `node C:/Projetos/minhas-skills/scripts/hansei-registro.mjs add C:/Projetos/minhas-skills-dev/docs/hansei.md "<achado em uma frase>"` (o worktree de desenvolvimento, nunca a pasta da main; diga a branch em que ficou, para quem chamou levar ao commit). Achado de sistema nunca vai para o registro do projeto aberto.
+- outro projeto sem registro (ex.: sem pasta ainda): não registre; devolva o achado completo na resposta, marcado "sem registro", para quem chamou guardar.
 
-Só o usuário tira um achado de `aberto` (quem chamou roda o `status` do mesmo script com a decisão dele). O hook `exigir-hansei` recusa um resumo final que não cite todos os IDs ainda abertos.
+Só o usuário tira um achado de `aberto` (quem chamou roda o `status` do mesmo script com a decisão dele). O hook `exigir-hansei` recusa um resumo final que não cite todos os IDs ainda abertos nos dois registros: o do projeto e o do sistema (o `docs/hansei.md` da pasta da main do minhas-skills, ou seja, o achado de sistema passa a ser cobrado depois do merge da branch em que foi gravado).
 
 Feche com uma linha para quem chamou copiar no resumo:
 
-`Hansei: <N> achados (<IDs>) | nada encontrado; conferido: <o que olhou>`
+`Hansei: <N> achados (<IDs>; projeto <n>, sistema <n>, deduzidos <n>) | nada encontrado; conferido: <o que olhou>`
 
 ## Como este exame melhora
 
