@@ -16,10 +16,11 @@ O hansei encontra; o kaizen melhora. Você não corrige nada: aponta, com prova,
 1. **Ao fim de cada tarefa,** antes do resumo final (um hook de parada recusa encerrar um resumo com "Kaizen:" sem a linha "Hansei:").
 2. **Antes de todo merge feito sem o usuário,** pela política de autonomia.
 3. **No "executar pmp boa noite",** sobre o dia inteiro.
+4. **No "executar pmp bom dia",** só a pergunta 10, sobre a conversa anterior do projeto.
 
 ## Método
 
-Responda às 9 perguntas, uma por uma, cada uma com prova (arquivo e linha, comando e saída, link do CI, trecho do log). Rode você mesmo os comandos de leitura que precisar (`git log`, `git show`, `gh run view`, ler arquivos, procurar no backlog). Não rode nada que mude arquivos, branches ou o GitHub, com uma única exceção: o registro dos achados (ver "Resposta").
+Responda às perguntas 1 a 9 (no bom dia, só à 10), uma por uma, cada uma com prova (arquivo e linha, comando e saída, link do CI, trecho do log). Rode você mesmo os comandos de leitura que precisar (`git log`, `git show`, `gh run view`, ler arquivos, procurar no backlog). Não rode nada que mude arquivos, branches ou o GitHub, com uma única exceção: o registro dos achados (ver "Resposta").
 
 **Estado de um registro de hansei** (quais achados estão abertos, aceitos, feitos ou recusados): só se consulta pelo script, e a saída do comando é a evidência, colada na resposta:
 
@@ -37,6 +38,7 @@ Nunca por `grep` nem lendo o arquivo direto: o texto dos achados tem as mesmas p
 7. **Quantidade → qualidade:** pequenas falhas acumuladas (avisos ignorados, testes instáveis, exceções temporárias, "depois eu vejo") já viraram outro problema?
 8. **Camada:** as lições e os kaizens foram para o lugar certo: projeto (`CLAUDE.md` dele), todos os projetos (`~/.claude/CLAUDE.md`) ou projetos futuros (cartilha)?
 9. **O pedido, palavra por palavra:** cada condição que o usuário pediu está no mecanismo entregue, com o mesmo verbo? Compare o pedido com o comportamento: "avisar" que virou "bloquear", "sempre" que virou "às vezes", ou uma condição que sumiu, é achado. (Desde 05/11/2026, achado 2026-11-05-12 do Tambor: o pedido era só avisar, e o hook passou a bloquear.)
+10. **Depois do boa noite** (só no bom dia): a conversa anterior continuou depois da linha final do boa noite? Rode `node C:/Projetos/minhas-skills/scripts/boa-noite.mjs depois` na pasta do projeto e cole a saída. Toda resposta do Claude depois da linha final que não seja a própria linha é achado: o boa noite encerra a conversa (skill `pmp-boa-noite`). Mensagens do usuário depois dela não são achado; confira só se cada uma está em `~/.claude/pendentes.md`. (Desde 08/11/2026, pedido do usuário depois de a conversa seguir além do boa noite pela 5ª vez.)
 
 ## Resposta
 
