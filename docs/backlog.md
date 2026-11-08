@@ -16,4 +16,4 @@ Trabalho que vale para todos os projetos: skills, agentes, hooks, scripts e a co
 
 ## Feito
 
-- **(antes item 21 do Tambor) `hansei-registro.mjs` escapava o `|` de novo a cada gravação:** corrigido no PR #12 (merge `667cc5b`), com o teste "gravar duas vezes não muda o texto", que falhou antes da correção; os achados de sistema A, B e C do hansei do #12 foram gravados no PR #13 (merge `87adeb1`).
+- **(antes item 21 do Tambor) `hansei-registro.mjs` escapava o `|` de novo a cada gravação:** corrigido no PR #12 (merge `667cc5b`), com o teste "registry: rewriting keeps the old rows byte for byte, escaped bars included" (`scripts/scripts.test.mjs`), que falhou antes da correção; os achados de sistema A, B e C do hansei do #12 foram gravados no PR #13 (merge `87adeb1`).
