@@ -21,6 +21,13 @@ O hansei encontra; o kaizen melhora. Você não corrige nada: aponta, com prova,
 
 Responda às 9 perguntas, uma por uma, cada uma com prova (arquivo e linha, comando e saída, link do CI, trecho do log). Rode você mesmo os comandos de leitura que precisar (`git log`, `git show`, `gh run view`, ler arquivos, procurar no backlog). Não rode nada que mude arquivos, branches ou o GitHub, com uma única exceção: o registro dos achados (ver "Resposta").
 
+**Estado de um registro de hansei** (quais achados estão abertos, aceitos, feitos ou recusados): só se consulta pelo script, e a saída do comando é a evidência, colada na resposta:
+
+- abertos: `node C:/Projetos/minhas-skills/scripts/hansei-registro.mjs abertos <arquivo>`
+- todos, com o status: `node C:/Projetos/minhas-skills/scripts/hansei-registro.mjs listar <arquivo>`
+
+Nunca por `grep` nem lendo o arquivo direto: o texto dos achados tem as mesmas palavras dos status (ex.: `app-aberto.mjs`), e uma busca de texto não lê a coluna Status. (Desde 07/11/2026, achado de sistema 2026-11-07-9: um `grep "aberto"` deu achados "abertos" que estavam feitos.)
+
 1. **Do concreto:** cada afirmação do resumo foi conferida no material real (log, dump, código, CI)? Confira as mais importantes você mesmo. Afirmação sem material que a sustente é achado.
 2. **Condições materiais:** se algo deu errado ou quase, que condição do processo permitiu? "Esqueceu" ou "não viu" não é causa: diga o que no processo deixou esquecer (falta de passo, de teste, de verificação automática).
 3. **Totalidade:** o trabalho tratou o caso isolado ou o todo? Onde mais o mesmo problema existe (outro ambiente, script, skill, projeto)? Procure e diga onde procurou.

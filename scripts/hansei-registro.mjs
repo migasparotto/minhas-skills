@@ -4,6 +4,7 @@
 //   node hansei-registro.mjs status <arquivo> <ID> aceito|feito
 //   node hansei-registro.mjs status <arquivo> <ID> recusado "<motivo do usuário>"
 //   node hansei-registro.mjs abertos <arquivo>                        -> prints the open IDs
+//   node hansei-registro.mjs listar <arquivo>                         -> prints "ID<TAB>status" for every finding
 // Only these statuses exist; "recusado" means refused by the user, and always carries the reason.
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
@@ -73,11 +74,14 @@ export function setStatus(rows, id, status, reason = "") {
 /** IDs of the findings still open. */
 export const openIds = (rows) => rows.filter((r) => r.status === "aberto").map((r) => r.id);
 
+/** One "ID<TAB>status" line per finding: the way to read every status without searching the text. */
+export const listing = (rows) => rows.map((r) => `${r.id}\t${r.status}`).join("\n");
+
 // Runs only as a command, so tests can import the rules.
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const [command, file, ...args] = process.argv.slice(2);
   try {
-    if (!file) throw new Error("Uso: hansei-registro.mjs add|status|abertos <arquivo> ...");
+    if (!file) throw new Error("Uso: hansei-registro.mjs add|status|abertos|listar <arquivo> ...");
     const rows = existsSync(file) ? parse(readFileSync(file, "utf8")) : [];
     const save = (next) => {
       mkdirSync(dirname(file), { recursive: true });
@@ -91,6 +95,8 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
       save(setStatus(rows, args[0], args[1], args.slice(2).join(" ")));
     } else if (command === "abertos") {
       console.log(openIds(rows).join("\n"));
+    } else if (command === "listar") {
+      console.log(listing(rows));
     } else {
       throw new Error(`Comando desconhecido: ${command}`);
     }
