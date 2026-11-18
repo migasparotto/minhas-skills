@@ -43,11 +43,30 @@ export function today(now = new Date()) {
   return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
 }
 
+export const USO = "Uso: node prs-do-dia.mjs [AAAA-MM-DD] [dono/repo ...] (sem --repo: o repositório vai direto, ex.: migasparotto/minhas-skills)";
+
+/**
+ * The day and the repositories from the command line. Throws with the usage when an argument is not
+ * `owner/repo` (e.g. `--repo`), so nothing reaches `gh` with a wrong name. `[null]` = current folder.
+ */
+export function parseArgs(argv, defaultDay = today()) {
+  const args = [...argv];
+  const day = /^\d{4}-\d{2}-\d{2}$/.test(args[0] ?? "") ? args.shift() : defaultDay;
+  const wrong = args.filter((a) => !/^[\w.-]+\/[\w.-]+$/.test(a));
+  if (wrong.length) throw new Error(`Argumento inválido: ${wrong.join(" ")}\n${USO}`);
+  return { day, repos: args.length > 0 ? args : [null] };
+}
+
 // Runs only as a command, so tests can import the rules.
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const args = process.argv.slice(2);
-  const day = /^\d{4}-\d{2}-\d{2}$/.test(args[0] ?? "") ? args.shift() : today();
-  const repos = args.length > 0 ? args : [null];
+  let parsed;
+  try {
+    parsed = parseArgs(process.argv.slice(2));
+  } catch (error) {
+    console.error(error.message);
+    process.exit(1);
+  }
+  const { day, repos } = parsed;
   for (const repo of repos) {
     const name = repo ?? execFileSync("gh", ["repo", "view", "--json", "nameWithOwner", "-q", ".nameWithOwner"], { encoding: "utf8" }).trim();
     const prs = JSON.parse(execFileSync("gh", ghArgs(day, repo), { encoding: "utf8" }));

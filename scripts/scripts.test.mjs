@@ -7,7 +7,7 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { test } from "node:test";
 import { add, openIds, parse, render, setStatus } from "./hansei-registro.mjs";
-import { format, ghArgs, today } from "./prs-do-dia.mjs";
+import { format, ghArgs, parseArgs, today } from "./prs-do-dia.mjs";
 
 const day = new Date("2026-11-05T12:00:00Z");
 
@@ -115,4 +115,15 @@ test("registry: the ID uses the local day, also late at night", () => {
   const { id, rows } = add([], "Achado", late);
   assert.equal(id, "2026-11-05-1");
   assert.equal(rows[0].date, "05/11/2026");
+});
+
+// Pendente 4 (08/11/2026): "--repo dono/repo" virou "--repo --repo" e caiu num erro do gh.
+test("prs-do-dia: an argument that is not owner/repo exits 1 with the usage, before calling gh", () => {
+  const script = fileURLToPath(new URL("./prs-do-dia.mjs", import.meta.url));
+  const out = spawnSync(process.execPath, [script, "--repo", "migasparotto/minhas-skills"], { encoding: "utf8" });
+  assert.equal(out.status, 1);
+  assert.match(out.stderr, /Uso: node prs-do-dia\.mjs/);
+  assert.match(out.stderr, /--repo/);
+  assert.deepEqual(parseArgs(["2026-11-08", "migasparotto/minhas-skills"], "x"), { day: "2026-11-08", repos: ["migasparotto/minhas-skills"] });
+  assert.deepEqual(parseArgs([], "2026-11-17"), { day: "2026-11-17", repos: [null] });
 });
