@@ -43,6 +43,7 @@ Não vale guardar o que o código, o histórico do git ou os documentos do proje
    - **Regra geral primeiro:** o detalhe da ferramenta ou do sistema vem depois, como o "como" ou o exemplo.
    - **Ação concreta:** dizer o que fazer. Evitar "lembrar que", "ter cuidado", "prestar atenção".
    - **Só o que foi comprovado:** não gravar como regra uma hipótese ou uma correção que ainda não se provou.
+   - **Estado consultado na hora:** para cada estado que a lição cita (feito, apagado, no ar, mecanismo existente, PR enviado), rodar a consulta agora (API, `git log`, arquivo) e colar o resultado ao lado na proposta. Um mecanismo que ainda não está na `main` é escrito como "no PR #N, ainda não enviado". (Kaizen do usuário, 07/11/2026: hansei 2026-11-07-1 e -3.)
 7. **Mostrar o diff, com a proposta no formato abaixo.**
 8. **Só gravar com o OK do usuário** ("ok lição"). Sem OK, nada muda. Se ele pedir ajuste, mostrar de novo. Esta skill grava o arquivo, mas não faz commit, exceto no caso abaixo.
 9. **Kaizen, antes de encerrar:** responder sempre as 3 perguntas, mesmo que a resposta seja "nenhum":
@@ -51,7 +52,7 @@ Não vale guardar o que o código, o histórico do git ou os documentos do proje
    3. **Em que camada?** Projeto (`CLAUDE.md` dele), todos os projetos (`~/.claude/CLAUDE.md`) ou projetos futuros (cartilha).
 
    Se alguma resposta não for "nenhum", propor no formato 💡 KAIZEN PROPOSTO, abaixo, separado da lição.
-10. **Se o destino for uma skill existente,** gravar também um commit no repositório `minhas-skills`, com a mensagem dizendo qual erro ou lição causou a mudança: o histórico explica por que cada regra existe. O push passa pelo agente `revisar-antes-de-enviar`.
+10. **Se o destino for uma skill existente,** gravar também um commit no repositório `minhas-skills`, com a mensagem dizendo qual erro ou lição causou a mudança: o histórico explica por que cada regra existe. O commit é feito no worktree `C:\Projetos\minhas-skills-dev`, numa branch própria, e entra por PR: a `main` do minhas-skills é protegida (ruleset "Proteção De Main", com o check `testes`) e recusa push direto. O push passa pelo agente `revisar-antes-de-enviar`.
 
 ## Formato da proposta
 
