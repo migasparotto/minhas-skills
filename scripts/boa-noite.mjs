@@ -85,8 +85,9 @@ export function pendentesProblems(claudeDir = join(homedir(), ".claude")) {
   const ignored = spawnSync("git", ["-C", claudeDir, "check-ignore", "-q", "pendentes.md"], { encoding: "utf8" });
   if (ignored.status === 0) return [`${claudeDir}: o pendentes.md está ignorado pelo .gitignore (falta "!/pendentes.md").`];
   if (ignored.status !== 1) return [`${claudeDir}: não é um repositório git (${String(ignored.stderr).trim()}).`];
-  const tracked = spawnSync("git", ["-C", claudeDir, "ls-files", "--error-unmatch", "pendentes.md"], { encoding: "utf8" });
-  if (tracked.status !== 0) return [`${claudeDir}: o pendentes.md não está commitado (falta "git add pendentes.md").`];
+  // In the history, not only staged: `log` is empty until the first commit that has the file.
+  const committed = spawnSync("git", ["-C", claudeDir, "log", "-1", "--format=%H", "--", "pendentes.md"], { encoding: "utf8" });
+  if (!String(committed.stdout).trim()) return [`${claudeDir}: o pendentes.md não está commitado (falta o commit dele).`];
   return [];
 }
 

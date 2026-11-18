@@ -110,6 +110,9 @@ test("conferir: fails while pendentes.md is ignored, passes once it is in the re
   writeFileSync(join(dir, ".gitignore"), "/*\n!/.gitignore\n!/pendentes.md\n");
   assert.match(run().stderr, /não está commitado/, "allowed but never added still fails");
   spawnSync("git", ["-C", dir, "add", "pendentes.md"]);
+  assert.match(run().stderr, /não está commitado/, "staged but never committed still fails");
+  const who = ["-c", "user.name=t", "-c", "user.email=t@example.com"];
+  spawnSync("git", ["-C", dir, ...who, "commit", "-q", "-m", "pendentes"]);
   const kept = run();
   assert.equal(kept.status, 0, kept.stderr);
   assert.equal(pendentesProblems(dir).length, 0);

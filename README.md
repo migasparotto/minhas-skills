@@ -41,7 +41,7 @@ As três que analisam ou guardam (`causa-raiz`, `investigar-falha`, `guardar-lic
 | --- | --- |
 | [`hansei-registro.mjs`](scripts/hansei-registro.mjs) | Registro dos achados do hansei (`docs/hansei.md` de cada projeto), com status `aberto`, `aceito`, `feito` ou `recusado pelo usuário` (este sempre com o motivo). |
 | [`prs-do-dia.mjs`](scripts/prs-do-dia.mjs) | Lista os PRs que entraram na main num dia, para conferir o Todoist e o Notion no "pmp boa noite". |
-| [`boa-noite.mjs`](scripts/boa-noite.mjs) | A linha fixa do boa noite e o subcomando `depois`, que mostra o que foi dito depois do último boa noite na conversa mais recente do projeto. Usado pela pergunta 10 do hansei, no bom dia. O subcomando `conferir` falha se o `pendentes.md` não estiver versionado no repositório privado do `~/.claude`; o passo 6 do boa noite o roda. |
+| [`boa-noite.mjs`](scripts/boa-noite.mjs) | A linha fixa do boa noite e o subcomando `depois`, que mostra o que foi dito depois do último boa noite na conversa mais recente do projeto. Usado pela pergunta 10 do hansei, no bom dia. O subcomando `conferir` falha se o `pendentes.md` estiver ignorado ou nunca tiver sido commitado no repositório privado do `~/.claude` (mudanças sem commit e sem push ficam para o `conferir-repos`, item S2 do backlog do sistema); o passo 6 do boa noite o roda. |
 | [`caminhos.mjs`](scripts/caminhos.mjs) | Recusa, nos arquivos versionados, caminho do Windows quebrado (`C:` grudado numa letra) ou pessoal (pasta de usuário). Rodado pelo teste no CI; o mesmo arquivo existe no tambor-de-notas. |
 
 Testes: `node --test hooks/*.test.mjs scripts/*.test.mjs`, também no CI (workflow `Testes`, no Windows). As linhas "Hansei:" reais que o hook já errou ficam em `hooks/casos-reais-hansei.json`.
