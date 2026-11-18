@@ -85,6 +85,8 @@ export function pendentesProblems(claudeDir = join(homedir(), ".claude")) {
   const ignored = spawnSync("git", ["-C", claudeDir, "check-ignore", "-q", "pendentes.md"], { encoding: "utf8" });
   if (ignored.status === 0) return [`${claudeDir}: o pendentes.md está ignorado pelo .gitignore (falta "!/pendentes.md").`];
   if (ignored.status !== 1) return [`${claudeDir}: não é um repositório git (${String(ignored.stderr).trim()}).`];
+  const tracked = spawnSync("git", ["-C", claudeDir, "ls-files", "--error-unmatch", "pendentes.md"], { encoding: "utf8" });
+  if (tracked.status !== 0) return [`${claudeDir}: o pendentes.md não está commitado (falta "git add pendentes.md").`];
   return [];
 }
 
