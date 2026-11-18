@@ -1,4 +1,8 @@
 import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 import { findInRepository, findProblems } from "./caminhos.mjs";
@@ -27,4 +31,20 @@ test("paths: accepts relative paths, ~, other folders and text that only looks s
 test("paths: the repository has no broken or personal path in its versioned files", () => {
   const root = fileURLToPath(new URL("..", import.meta.url));
   assert.deepEqual(findInRepository(root), []);
+});
+
+test("paths: also scans new files not yet committed, but not ignored ones", () => {
+  const root = mkdtempSync(join(tmpdir(), "caminhos-"));
+  try {
+    execFileSync("git", ["init", "-q", root]);
+    writeFileSync(join(root, "novo.md"), `em ${C}${B}${U}${B}fulano`);
+    writeFileSync(join(root, ".gitignore"), "ignorado.md\n");
+    writeFileSync(join(root, "ignorado.md"), `em ${C}${B}${U}${B}fulano`);
+    assert.deepEqual(
+      findInRepository(root).map((p) => p.file),
+      ["novo.md"],
+    );
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
 });

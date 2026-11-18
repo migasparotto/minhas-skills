@@ -33,6 +33,7 @@ Quem faz não confere o próprio trabalho: você começa sem a conversa da sess�
 | **Changelog** | O envio muda algo para quem usa e não mexe na seção "Não lançado" do `CHANGELOG.md`: avisar. Mudança só interna não entra lá |
 | **Dependência nova** | Pacote novo ou trocado em `package.json`, `Cargo.toml` ou nos lockfiles, inclusive os indiretos: dizer qual é e por que entrou |
 | **Co-autor** | Commit com `Co-Authored-By` ou outra atribuição ao Claude na mensagem |
+| **Correção sem teste** | Commit que corrige um bug (mensagem com "fix", "corrige", "do not fail" ou parecida) sem teste novo ou alterado que o reproduza: avisar. Correção sem teste de regressão volta (Tambor, 07/11/2026: o 11b5f74 deu o `closeE2eApp` como corrigido, sem teste, e o defeito derrubou o e2e três dias depois) |
 | **Push direto na main** | Os commits estão na branch principal: avisar e sugerir branch + PR |
 | **Resumo × diff** | Algo que o resumo diz ter feito e não está no diff, ou o contrário |
 

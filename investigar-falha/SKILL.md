@@ -18,7 +18,7 @@ Descobre por que algo falhou, olhando primeiro o que a falha deixou registrado. 
 
 ## Passos
 
-1. **Guardar a evidência automática:** ler o que testes e app já salvaram, como a saída completa, o print e o log. Se a falha não deixou nada, esse é o primeiro problema a resolver, e não só ali: a mesma evidência costuma faltar nos outros lugares onde o código roda (ver o passo 11).
+1. **Guardar a evidência automática:** ler o que testes e app já salvaram, como a saída completa, o print e o log. **Falha relatada é falha medida:** antes de descrever a falha a alguém, tirar do log (1) a contagem de falhas e de aprovações (ex.: "8 falharam, 7 passaram", nunca "um teste falhou"); (2) o primeiro erro de cada tipo, com a linha; (3) o link do run ou o caminho do log. Sem os três, a falha não foi medida. Se a falha não deixou nada, esse é o primeiro problema a resolver, e não só ali: a mesma evidência costuma faltar nos outros lugares onde o código roda (ver o passo 11).
 2. **Anotar o horário exato** e o que estava aberto. Copiar os logs relevantes para uma pasta fora do repositório.
 3. **Visualizador de Eventos (Windows):**
    - **Aplicativo:** IDs 1000 e 1001, com módulo e código do erro.
@@ -44,6 +44,7 @@ Descobre por que algo falhou, olhando primeiro o que a falha deixou registrado. 
 ## Formato do resultado
 
 **Falha:** <o que, quando, em qual versão>
+**Medida:** <N falharam, M passaram · primeiro erro de cada tipo · link do run ou caminho do log>
 **Evidência:** <o que foi lido | o que não cobre o horário>
 **Tentado:** <o que não reproduziu ou não ajudou, com números>
 **Causa:** <comprovada: evidência | hipótese | desconhecida>
