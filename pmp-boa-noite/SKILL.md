@@ -27,7 +27,7 @@ Cada item fica num lugar só: o `pendentes.md` não repete o que já está no ba
 3. **Hansei:** chamar o agente `hansei` sobre o dia. Os achados ficam no registro do escopo, com status `aberto`.
 4. **Todoist:** conferir as tarefas abertas dos projetos ligados ao repositório contra os PRs que entraram na main no dia (`node C:/Projetos/minhas-skills/scripts/prs-do-dia.mjs`). Fechar as que terminaram, com um comentário do que foi feito (PR e data); no resumo, dizer o que ficou aberto e por quê.
 5. **Notion:** o que mudou chegou às páginas do projeto? O que faltar, atualizar.
-6. **Skills:** conferir que o repositório das skills (`~/.claude/skills`) está na `main`, sem commits por enviar; se não estiver, dizer no resumo e anotar em `~/.claude/pendentes.md`.
+6. **Skills:** conferir que o repositório das skills (`~/.claude/skills`) está na `main`, sem commits por enviar; se não estiver, dizer no resumo e anotar em `~/.claude/pendentes.md`. Rodar também `node C:/Projetos/minhas-skills/scripts/boa-noite.mjs conferir`: o `pendentes.md` precisa estar dentro do repositório privado do `~/.claude` (achado de sistema 2026-11-08-2); se o comando falhar, dizer no resumo.
 7. **Envio:** mostrar o que mudou desde o último envio.
    - O próprio comando "executar pmp boa noite" autoriza o commit dos registros do dia: backlog, `docs/hansei.md`, `~/.claude/pendentes.md` e o que o usuário já aprovou durante o dia.
    - Antes do push, chamar o agente `revisar-antes-de-enviar` e mostrar o veredito. Com ✅, fazer o push da branch (nunca na `main` direto, nunca merge).
