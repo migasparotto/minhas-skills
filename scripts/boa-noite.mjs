@@ -3,6 +3,8 @@
 //   node boa-noite.mjs depois [pasta das transcrições]   -> what was said after the last "boa noite"
 // The folder defaults to the Claude Code transcripts of the current folder (~/.claude/projects/<pasta>).
 // Used by the hansei (question 10) in the next "pmp bom dia". It only reads, and "nada" is a valid answer.
+//   node boa-noite.mjs conferir [pasta do ~/.claude]    -> exit 1 if pendentes.md is outside its git repo
+import { spawnSync } from "node:child_process";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
@@ -75,12 +77,30 @@ export function report(dir) {
   return `${dir}: nenhuma conversa terminou com o boa noite.`;
 }
 
+/**
+ * Problems that keep the pending file out of the private repo of ~/.claude (empty = fine).
+ * Asks git itself: `check-ignore` exits 0 when ignored and 1 when not ("not ignored" is the good answer).
+ */
+export function pendentesProblems(claudeDir = join(homedir(), ".claude")) {
+  const ignored = spawnSync("git", ["-C", claudeDir, "check-ignore", "-q", "pendentes.md"], { encoding: "utf8" });
+  if (ignored.status === 0) return [`${claudeDir}: o pendentes.md está ignorado pelo .gitignore (falta "!/pendentes.md").`];
+  if (ignored.status !== 1) return [`${claudeDir}: não é um repositório git (${String(ignored.stderr).trim()}).`];
+  return [];
+}
+
 // Runs only as a command, so tests can import the rules.
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const [command, dir] = process.argv.slice(2);
   try {
-    if (command !== "depois") throw new Error("Uso: boa-noite.mjs depois [pasta das transcrições]");
-    console.log(report(dir ?? transcriptsDir(process.cwd())));
+    if (command === "conferir") {
+      const problems = pendentesProblems(dir);
+      if (problems.length) throw new Error(problems.join("\n"));
+      console.log("pendentes.md: dentro do repositório do ~/.claude.");
+    } else if (command === "depois") {
+      console.log(report(dir ?? transcriptsDir(process.cwd())));
+    } else {
+      throw new Error("Uso: boa-noite.mjs depois [pasta das transcrições] | conferir [pasta do ~/.claude]");
+    }
   } catch (error) {
     console.error(error.message);
     process.exit(1);

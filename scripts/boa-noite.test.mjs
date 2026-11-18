@@ -7,7 +7,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { test } from "node:test";
-import { LINHA_FINAL, afterTheDay, endsTheDay, transcriptsDir } from "./boa-noite.mjs";
+import { LINHA_FINAL, afterTheDay, endsTheDay, pendentesProblems, transcriptsDir } from "./boa-noite.mjs";
 
 const read = (path) => readFileSync(new URL(path, import.meta.url), "utf8");
 const boaNoite = read("../pmp-boa-noite/SKILL.md");
@@ -94,4 +94,27 @@ test("as a command: reports the newest conversation that ended the day, and 'not
   const out = run();
   assert.equal(out.status, 0);
   assert.match(out.stdout, /nova\.jsonl: nada depois do boa noite/);
+});
+
+// Achado de sistema 2026-11-08-2: o pendentes.md fora do git não tinha histórico. Roda o git de verdade.
+test("conferir: fails while pendentes.md is ignored, passes once it is in the repo", () => {
+  const dir = mkdtempSync(join(tmpdir(), "claude-"));
+  const script = fileURLToPath(new URL("./boa-noite.mjs", import.meta.url));
+  const run = () => spawnSync(process.execPath, [script, "conferir", dir], { encoding: "utf8" });
+  spawnSync("git", ["init", "-q", dir]);
+  writeFileSync(join(dir, "pendentes.md"), "# Pendentes\n");
+  writeFileSync(join(dir, ".gitignore"), "/*\n!/.gitignore\n");
+  const ignored = run();
+  assert.equal(ignored.status, 1);
+  assert.match(ignored.stderr, /ignorado pelo \.gitignore/);
+  writeFileSync(join(dir, ".gitignore"), "/*\n!/.gitignore\n!/pendentes.md\n");
+  const kept = run();
+  assert.equal(kept.status, 0, kept.stderr);
+  assert.equal(pendentesProblems(dir).length, 0);
+  assert.match(boaNoite, /boa-noite\.mjs conferir/);
+});
+
+test("conferir: a folder that is not a git repo is reported, not taken as fine", () => {
+  const dir = mkdtempSync(join(tmpdir(), "sem-git-"));
+  assert.match(pendentesProblems(dir)[0], /não é um repositório git/);
 });
