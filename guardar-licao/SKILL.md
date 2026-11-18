@@ -12,7 +12,7 @@ Transforma o que deu errado em uma linha, ou um teste, que evita o mesmo problem
 - O usuário disse "guarda a lição": seguir os passos agora.
 - Apareceu um erro ou uma armadilha, algo demorou demais, houve retrabalho ou o usuário corrigiu o Claude: terminar o que está em andamento e propor a lição. Sem o pedido dele, propor uma vez só; se ele recusar, não insistir.
 - **O usuário apontou um kaizen que o Claude não viu:** sempre vira lição, e também ajuste na skill que deveria ter pegado (destino "Skill").
-- "pmp boa noite": antes do commit, revisar as falhas, correções e lacunas do dia com as 3 perguntas do kaizen (passo 9) e propor **no máximo 3 lições** e os kaizens, os mais úteis.
+- "pmp boa noite": antes do commit, revisar as falhas, correções e lacunas do dia com as 3 perguntas do kaizen (passo 9) e propor **no máximo 3 lições** e os kaizens, os mais úteis. No boa noite, os blocos vão inteiros para `~/.claude/pendentes.md`, marcados "sem decisão", sem pedir o OK: o boa noite não faz perguntas, e o "pmp bom dia" pede a decisão.
 
 **Lição ou kaizen?** Lição é algo que deu errado. Kaizen é algo que pode ficar melhor mesmo sem erro. Cada um tem o seu bloco no fim da mensagem.
 

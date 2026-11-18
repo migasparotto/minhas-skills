@@ -2,12 +2,35 @@
 // Claude Code passes the turn as JSON on stdin; exit 2 sends stderr back as the next instruction.
 // Only a final summary is checked, and a final summary is the answer with "Kaizen:" lines (one per
 // item, a rule of ~/.claude/CLAUDE.md). Never by length: a long explanation is not a summary.
-// It also holds a final summary that leaves out a finding still "aberto" in docs/hansei.md.
+// It also holds a final summary that leaves out a finding still "aberto" in either hansei registry:
+// the project's (docs/hansei.md of the session folder) or the system's (docs/hansei.md of minhas-skills).
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import process from "node:process";
-import { pathToFileURL } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { openIds, parse } from "../scripts/hansei-registro.mjs";
+
+/**
+ * The registries whose open findings a final summary must cite: the project's and the system's.
+ * The system registry is the one of the repository this hook lives in (HANSEI_REGISTRO_SISTEMA overrides it).
+ */
+export function registryFiles(cwd, env = process.env) {
+  const system = env.HANSEI_REGISTRO_SISTEMA ?? fileURLToPath(new URL("../docs/hansei.md", import.meta.url));
+  return [join(cwd, "docs", "hansei.md"), system];
+}
+
+/** Open IDs of all the given registry files, once each; a missing file has none. */
+export function openIdsOf(files, read = (f) => readFileSync(f, "utf8")) {
+  const ids = new Set();
+  for (const file of files) {
+    try {
+      for (const id of openIds(parse(read(file)))) ids.add(id);
+    } catch {
+      // no registry there
+    }
+  }
+  return [...ids];
+}
 
 /** Decides whether the turn may end. Returns null to allow, or the reason to keep going. */
 export function hanseiMissing({ stop_hook_active, last_assistant_message, background_tasks }) {
@@ -34,7 +57,7 @@ export function openFindingsMissing({ stop_hook_active, last_assistant_message, 
   const missing = open.filter((id) => !new RegExp(`(?<![\\d-])${id}(?!\\d)`).test(text));
   return missing.length === 0
     ? null
-    : `O resumo final não cita os achados do hansei ainda abertos em docs/hansei.md: ${missing.join(", ")}. Mostre cada um ao usuário (achado e ID) para ele decidir; nenhum achado é recusado por conta própria.`;
+    : `O resumo final não cita os achados do hansei ainda abertos nos registros (docs/hansei.md do projeto e do minhas-skills): ${missing.join(", ")}. Mostre cada um ao usuário (achado e ID) para ele decidir; nenhum achado é recusado por conta própria.`;
 }
 
 // Reads the turn only when run as the hook, so tests can import the rule.
@@ -47,12 +70,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   } catch {
     process.exit(0); // never block on a malformed input
   }
-  let open = [];
-  try {
-    open = openIds(parse(readFileSync(join(input.cwd ?? process.cwd(), "docs", "hansei.md"), "utf8")));
-  } catch {
-    // no registry in this project
-  }
+  const open = openIdsOf(registryFiles(input.cwd ?? process.cwd()));
   const reason = hanseiMissing(input) ?? openFindingsMissing(input, open);
   if (reason) {
     process.stderr.write(reason);

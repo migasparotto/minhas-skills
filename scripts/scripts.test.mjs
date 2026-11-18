@@ -24,6 +24,17 @@ test("registry: new findings are open, numbered per day, and survive a round tri
   assert.deepEqual(openIds(back), ["2026-11-05-1", "2026-11-05-2"]);
 });
 
+// Was item 21 of the Tambor backlog; now under "Feito" in the system backlog (docs/backlog.md): every rewrite added a backslash before each "|" of the old rows.
+test("registry: rewriting keeps the old rows byte for byte, escaped bars included", () => {
+  const text = render(add([], "item | estado | evidência", day).rows);
+  const old = (t) => t.split("\n").find((l) => l.startsWith("| 2026-11-05-1 |"));
+  assert.equal(parse(text)[0].finding, "item | estado | evidência");
+  assert.equal(render(parse(text)), text);
+  const next = render(add(parse(text), "Outro", day).rows);
+  assert.equal(old(next), old(text));
+  assert.equal(old(render(setStatus(parse(next), "2026-11-05-2", "aceito"))), old(text));
+});
+
 test("registry: only valid statuses; refusing needs the user's reason", () => {
   const { rows } = add([], "Achado", day);
   assert.throws(() => setStatus(rows, "2026-11-05-1", "talvez"), /inválido/);
@@ -48,6 +59,26 @@ test("registry as a command: add, list open, change status", () => {
   assert.equal(run("status", file, id, "aceito").status, 0);
   assert.equal(run("abertos", file).stdout.trim(), "");
   assert.match(readFileSync(file, "utf8"), /\| aceito \|/);
+});
+
+// Hansei finding 2026-11-07-9 (system): a grep for "aberto" matched the word inside the findings' text.
+test("registry as a command: listar reads every status from the Status column, not from the text", () => {
+  const file = join(mkdtempSync(join(tmpdir(), "hansei-")), "docs", "hansei.md");
+  const script = fileURLToPath(new URL("./hansei-registro.mjs", import.meta.url));
+  const run = (...args) => spawnSync(process.execPath, [script, ...args], { encoding: "utf8" });
+  const a = run("add", file, "scripts/app-aberto.mjs: o app fica aberto").stdout.trim();
+  const b = run("add", file, "Outro achado").stdout.trim();
+  run("status", file, a, "feito");
+  assert.equal(run("listar", file).stdout.trim(), `${a}\tfeito\n${b}\taberto`);
+  assert.equal(run("abertos", file).stdout.trim(), b);
+});
+
+// The agent must tell how to read a registry's state: by the script, never by grep.
+test("the hansei agent reads a registry's state only through the script", () => {
+  const agent = readFileSync(new URL("../agents/hansei.md", import.meta.url), "utf8");
+  assert.match(agent, /hansei-registro\.mjs abertos <arquivo>/);
+  assert.match(agent, /hansei-registro\.mjs listar <arquivo>/);
+  assert.match(agent, /Nunca por `grep`/);
 });
 
 test("PRs of the day: search by merge date into main, oldest first", () => {
